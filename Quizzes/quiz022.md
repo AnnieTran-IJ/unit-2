@@ -1,4 +1,4 @@
-# Quiz 023
+# Quiz 022
 
 ## Paper Solution
 
@@ -8,4 +8,5 @@
 print("Hello World")
 ```
 ## Proof of work
-![Image_20241105_204037_116](https://github.com/user-attachments/assets/30ea18c5-5b00-43f4-9a20-fd94fd41a6ba)
+<img width="809" alt="Image_20241105_204030" src="https://github.com/user-attachments/assets/b05f17a3-5019-407b-a0e2-7416067038ea">
+
