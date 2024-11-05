@@ -18,4 +18,4 @@ truth_table(3)
 ![image](https://github.com/user-attachments/assets/96bccf39-9179-49e6-b9ad-bdc71ca1dc20)
 
 ## b.Truth table and circuit for: Light = S1S2+(S2+S3(notS1))S1 
-
+![image](https://github.com/user-attachments/assets/74285339-177e-49b6-b1fc-b159e013a06c)
