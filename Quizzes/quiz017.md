@@ -1,4 +1,7 @@
 # Quiz 017
+## Paper Solution
+![image](https://github.com/user-attachments/assets/dbbfc2f3-d6d8-4290-bb8d-18d7711f4724)
+
 ## Code
 ```.py
 def truth_table(n:int):
