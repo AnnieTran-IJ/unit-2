@@ -1,5 +1,7 @@
 # Quiz 019
 ## Paper Code
+![image](https://github.com/user-attachments/assets/adc94e42-4d89-4f0f-a10f-40e0882255df)
+
 ## Code
 ```.py
 import random
