@@ -1,5 +1,5 @@
 # Quiz 019
-
+## Paper Code
 ## Code
 ```.py
 import random
