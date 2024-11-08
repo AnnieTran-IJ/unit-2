@@ -27,5 +27,7 @@ plt.title("Graph for the parabola of y = |x|")
 plt.show()
 ```
 ## Proof of work
+![image](https://github.com/user-attachments/assets/53fb2033-3edf-426b-b10a-7033e14eae9b)
+
 <img width="809" alt="Image_20241105_204030" src="https://github.com/user-attachments/assets/b05f17a3-5019-407b-a0e2-7416067038ea">
 
