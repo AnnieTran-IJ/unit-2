@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/79795f23-38ea-4a16-8339-dd73873e80db)# Quiz 020
+# Quiz 020
 
 ## Code
 ```.py
