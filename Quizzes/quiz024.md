@@ -31,5 +31,6 @@ plt.show()
 ```
 ## Proof of work
 ![image](https://github.com/user-attachments/assets/27a7f939-5899-4a59-9ee2-e1b3da02ecf5)
+<img width="692" alt="Image_20241111_134914" src="https://github.com/user-attachments/assets/48f3d13a-37b9-43f0-8cd5-997e31a2dad7">
 
 *Run it with the input and output given*
