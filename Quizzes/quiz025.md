@@ -24,3 +24,5 @@ print(result2)
 ```
 ## Proof of work
 ![image](https://github.com/user-attachments/assets/fc509134-045b-4773-828c-dc53cae597fa)
+
+**b) How many different colors could you represent in a 6 bit computer?**
