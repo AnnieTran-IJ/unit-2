@@ -3,7 +3,7 @@
 ## Criteria A: Planning
 
 ## Problem definition
-In the common laundry area in R4-Up and R3-10, students frequently report that their clothes come out damp from the dryer, requiring multiple cycles to dry fully. This problem is especially noticeable during the winter, when colder temperatures and higher humidity seem to affect the drying process. Residents suspect that the environmental conditions in the laundry room—such as low temperature or high humidity—are interfering with the dryer’s performance, but they lack the data to confirm this or identify effective solutions.
+In the common laundry area in R4-Up and R3-10, students frequently report that their clothes come out damp from the dryer, requiring multiple cycles to dry fully. This problem is especially noticeable during the winter when colder temperatures and higher humidity seem to affect the drying process. Residents suspect that the environmental conditions in the laundry room—such as low temperature or high humidity—are interfering with the dryer’s performance, but they lack the data to confirm this or identify effective solutions.
 
 To address this, the students look for a low-cost sensing device to monitor temperature and humidity in the laundry area over a week. By analyzing the collected data, they aim to determine if environmental factors are contributing to the issue and propose targeted solutions, such as improving ventilation, adjusting room insulation, or optimizing dryer settings. 
 
@@ -46,9 +46,13 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
   
   However, the use of data science raises critical questions, such as "How do we account for biases in data collection and limitations in models that might skew findings?" "Are interpretations of data shaped by human or algorithmic assumptions, and how does this affect conclusions?" Ethical concerns occur when data is used selectively or disproportionately to influence policies, potentially marginalizing certain communities.
 
-3. What responsibilities do we have as technologists when it comes to handling personal data related to our living spaces?
-4. What cultural and contextual factors might impact our interpretation of the results, especially when comparing our local readings with those from the campus? 
+**2. What responsibilities do we have as technologists when it comes to handling personal data related to our living spaces?** 
+  In the context of our project, we must ensure the privacy of individuals by anonymizing any collected data and being transparent about how it is used. Users should give informed consent for the monitoring process, knowing exactly what data is being collected and for what purpose. Security measures such as encryption and secure storage must be implemented to protect the data from unauthorized access. Additionally, we should adhere to data minimization, collecting only the environmental information necessary to improve living conditions without compromising personal privacy.
 
+**3. What cultural and contextual factors might impact our interpretation of the results, especially when comparing our local readings with those from the campus?**
+  One of the key factors is the perception of comfort, which can vary depending on cultural backgrounds; for example, individuals from warmer climates may tolerate higher temperatures and humidity better than those from cooler regions. Additionally, occupancy patterns in different parts of the campus, such as dormitories versus study buildings, can create variability in readings, as higher foot traffic or different uses of space may influence temperature and humidity levels.
+
+  Contextual elements like building design and maintenance also play a role, as older buildings may have poorer insulation or ventilation, messing up the comparison with newer or better-maintained structures. The timing of the readings is another important factor; environmental conditions may differ between daytime and nighttime due to varying activities or heating schedules. Finally, expectations and biases among users can affect interpretation, as individuals may attribute discomfort to specific factors (e.g., blaming humidity over temperature) based on personal experiences or assumptions, even if the data suggests otherwise. 
 # Criteria B: Design
 ![System Diagrams unit 2 (1)](https://github.com/user-attachments/assets/7ec53d20-7afa-4279-8ac2-b5798e38f4db)
 
@@ -56,7 +60,8 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 ## Record of Tasks
 | Task No | Planned Action                                                | Planned Outcome                                                                                                 | Time estimate | Target completion date | Criterion |
 |---------|---------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
-| 1       | Write the Problem definition, Design Statement and modify the success criteria                   | 10min         | Nov 23                 | A         |
+| 1       | Write the Problem definition, Design Statement and modify the success criteria | Finalize problem definition and success criteria                  | 10min         | Nov 23                 | A         |
+| 2       | Answer TOK connection | Draft and refine answers            | 15min         | Nov 23                 | A         |
 
 ## Test Plan
 
