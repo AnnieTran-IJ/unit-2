@@ -1,8 +1,5 @@
 # Quiz 025
 
-## Paper Solution
-
-
 ## Code
 ```.py
 def count_letters(lexicon: dict, msg: str) -> dict:
@@ -26,3 +23,4 @@ print(result2)
 ![image](https://github.com/user-attachments/assets/fc509134-045b-4773-828c-dc53cae597fa)
 
 **b) How many different colors could you represent in a 6 bit computer?**
+<img width="1071" alt="Image_20241127_082654" src="https://github.com/user-attachments/assets/dcd35132-e5b1-41ce-a899-aee72e701099">
