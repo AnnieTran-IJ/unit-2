@@ -58,14 +58,15 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 
 **Fig.1** System diagram (HL) for the proposed system to visualize and analyze temperature and humidity data on our campus. Physical variables were measured with a network of DHT11/BMP280 sensors locally. A remote server provides an API for remote monitoring and storage via the ISAK-S network. 
 ## Record of Tasks
-\begin{table}[]
-\begin{tabular}{llllll}
-\hline
-Task No & Planned Action                                                                 & Planned Outcome                                  & Time estimate & Target completion date & Criterion \\ \hline
-1       & Write the Problem definition, Design Statement and modify the success criteria & Finalize problem definition and success criteria & 10min         & Nov 23                 & A         \\
-2       & Answer TOK connection                                                          & Draft and refine answers                         & 15min         & Nov 23                 & A         \\ \hline
-\end{tabular}
-\end{table}
++---------+--------------------------------------------------------------------------------+-----------------------------------------------------------+---------------+------------------------+-----------+
+| Task No | Planned Action                                                                 | Planned Outcome                                           | Time estimate | Target completion date | Criterion |
++---------+--------------------------------------------------------------------------------+-----------------------------------------------------------+---------------+------------------------+-----------+
+| 1       | Write the Problem definition, Design Statement and modify the success criteria | Finalize problem definition and success criteria          | 10 min        | Nov 23                 | A         |
++---------+--------------------------------------------------------------------------------+-----------------------------------------------------------+---------------+------------------------+-----------+
+| 2       | Answer TOK connection                                                          | Draft and refine answers                                  | 15 min        | Nov 23                 | A         |
++---------+--------------------------------------------------------------------------------+-----------------------------------------------------------+---------------+------------------------+-----------+
+| 3       | Research how to set up Arduino sensors                                         | Arduino set up finished and ready to start recording data | 30 min        | Nov 26                 | C         |
++---------+--------------------------------------------------------------------------------+-----------------------------------------------------------+---------------+------------------------+-----------+
 
 ## Test Plan
 
