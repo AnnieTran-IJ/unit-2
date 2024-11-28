@@ -3,14 +3,14 @@
 ## Criteria A: Planning
 
 ## Problem definition
-There is a stray cat living in the ISAK vicinity...we aim to create a safe environment for the cat to sustain their health and survival through Karuizawa winter weather, which is known to be extremely cold and dry. Client: a teacher who takes care of the cat and students who love the cat. 
+Halley, a stray cat residing near the ISAK campus, faces significant challenges as winter approaches. The harsh winter weather, characterized by extremely cold and dry conditions, poses serious risks to Halley’s well-being. These risks include respiratory issues like asthma and bronchitis, exacerbated by low humidity (1), as well as hypothermia and frostbite due to freezing temperatures, wind, and snow (2). Given the concerns of ISAK students and teachers who wish to ensure Halley’s safety, the primary problem is determining if a suitable indoor space on campus can provide appropriate environmental conditions, particularly regarding humidity and temperature, to improve Halley’s chances of survival and comfort.
 
 ## Proposed Solution
 Considering the client's requirements an adequate solution includes a low-cost sensing device for humidity and temperature and a custom data script that processes and analyzes the samples acquired. For a low-cost sensing device, an adequate alternative is the DHT11 sensor[^1] which is offered online for less than 5 USD and provides adequate precision and range for the client's requirements (Temperature Range: 0°C to 50°C, Humidity Range: 20% to 90%). Similar devices such as the DHT22, AHT20, or the AM2301B [^2] have higher specifications, however, the DHT11 uses a simple serial communication (SPI) rather than more elaborated protocols such as the I2C used by the alternatives. For the range, precision, and accuracy required in this application, the DHT11 provides the best compromise. Connecting the DHT11 sensor to a computer requires a device that provides a Serial Port communication. A cheap and often-used alternative for prototyping is the Arduino UNO microcontroller [^3]. "Arduino is an open-source electronics platform based on easy-to-use hardware and software"[^4]. In addition to the low cost of the Arduino (< 6USD), this device is programable and expandable[^1]. I considered alternatives such as different versions of the original Arduino but their size and price make them a less adequate solution.
 
 Considering the budgetary constraints of the client and the hardware requirements, the software tool that I proposed for this solution is Python. Python's open-source nature and platform independence contribute to the long-term viability of the system. The use of Python simplifies potential future enhancements or modifications, allowing for seamless scalability without the need for extensive redevelopment [^5][^6]. In comparison to the alternative C or C++, which share similar features, Python is a high-level programming language (HLL) with high abstraction [^7]. For example, memory management is automatic in Python whereas it is the responsibility of the C/C++ developer to allocate and free up memory [^7], this could result in faster applications but also memory problems. In addition, an HLL language will allow me and future developers to extend the solution or solve issues promptly.  
 
-**Design statement:**  We will develop a system using Arduino and DHT11 sensors to measure temperature and humidity at 3 different locations in the laundry area in R4U and R3-10, as specified by the client. The system will use Python for data processing and visualization, implemented in the PyCharm IDE. Collected data will be visualized using the pyplot module from Python's matplotlib library to provide clear insights into the environmental conditions within the room.
+**Design statement:**  To address this problem, we will design and implement a monitoring system using Arduino technology, equipped with DHT11 and BME280 sensors, to measure environmental parameters such as temperature, humidity, and pressure in the R4U dormitory. The system will process and visualize the collected data using Python, utilizing the PyCharm IDE for development and the matplotlib library for data visualization. This will enable a clear analysis of indoor conditions to evaluate whether R4U can provide a safe and sustainable living environment for Halley during the winter months.
 
 ## Success Criteria
 
@@ -74,3 +74,8 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 # Criteria D: Functionality
 
 A 7 min video demonstrating the proposed solution with narration
+
+# Source: 
+(1) https://cattree.uk/humidifiers-and-their-impact-on-cats/#:~:text=Cats%20can%20experience%20various%20respiratory,easier%20and%20more%20comfortable%20breathing.
+(2) https://www.vet.cornell.edu/departments-centers-and-institutes/cornell-feline-health-center/health-information/cat-health-news/cold-weather-tips-cats#:~:text=Winter%20impacts%20cats%20that%20spend,cats%20indoors%20at%20all%20times.
+
