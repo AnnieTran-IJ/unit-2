@@ -1,6 +1,8 @@
+```.py
 import requests
 from datetime import datetime
 
+from Tools.scripts.highlight import default_html
 
 ip = "192.168.4.137"
 request = requests.get(f"http://{ip}/readings")
@@ -14,12 +16,34 @@ print(cookie)
 
 auth = {"Authorization": f"Bearer {cookie}"}
 
-s1_t = {"type": "Temperature",
+dht_t = {"type": "Temperature",
         "location": "Annie's Room",
-        "name": "sensor_asquare_1",
-        "unit": "C"
-} #"owner_id": 52
+        "name": "dht_asquare_1",
+        "unit": "C"} #id: 185
+r = requests.post(f'http://{ip}/sensor/new', json=dht_t, headers=auth)
 
-r = requests.post(f'http://{ip}/sensor/new', json=s1_t, headers=auth)
+dht_h = {"type": "Humidity",
+        "location": "Annie's Room",
+        "name": "dht_asquare_2",
+        "unit": "%"} #id: 186
 
+r = requests.post(f'http://{ip}/sensor/new', json=dht_h, headers=auth)
+bme_t = {"type": "Temperature",
+        "location": "Annie's Room",
+        "name": "bme_asquare_1",
+        "unit": "C"} #id: 187
 
+r = requests.post(f'http://{ip}/sensor/new', json=bme_t, headers=auth)
+bme_h = {"type": "Humidity",
+        "location": "Annie's Room",
+        "name": "bme_asquare_2",
+        "unit": "%"} #id: 188
+
+r = requests.post(f'http://{ip}/sensor/new', json=bme_h, headers=auth)
+
+bme_p = {"type": "Pressure",
+        "location": "Annie's Room",
+        "name": "bme_asquare_3",
+        "unit": "hPa"} #id:197
+r = requests.post(f'http://{ip}/sensor/new', json=bme_p, headers=auth)
+```
