@@ -1,4 +1,4 @@
-```.py
+
 import requests
 from datetime import datetime
 
@@ -46,4 +46,4 @@ bme_p = {"type": "Pressure",
         "name": "bme_asquare_3",
         "unit": "hPa"} #id:197
 r = requests.post(f'http://{ip}/sensor/new', json=bme_p, headers=auth)
-```
+
