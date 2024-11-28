@@ -60,7 +60,9 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 |---------|--------------------------------------------------------------------------------|-----------------------------------------------------------|---------------|------------------------|-----------|
 | 1       | Write the Problem definition, Design Statement and modify the success criteria | Finalize problem definition and success criteria          | 10 min        | Nov 23                 | A         |
 | 2       | Answer TOK connection                                                          | Draft and refine answers                                  | 15 min        | Nov 23                 | A         |
-| 3       | Research how to set up Arduino sensors                                         | Arduino set up finished and ready to start recording data | 30 min        | Nov 26                 | C         |
+| 3       | Research how to set up Arduino sensors                                         | Arduino set up finished with correct wiring the computer              | 30 min        | Nov 26                 | C         |
+| 4       | Connect BME280 and DHT11 to computer                                           | All necessary libraries downloaded and have the code ready for collecting data  | 30 min        | Nov 27                 | C         |
+| 5       | Set-up (backup) API storages in ISAK-S network                                 | Created 5 sensors' ids for backup on the public network and set up the csv file for local storage  | 45 min        | Nov 28                 | C         |
 
 ## Test Plan
 
