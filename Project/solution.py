@@ -1,45 +1,91 @@
 import serial
 import time
-import datetime
-import requests
-from API import ip, header
+import csv
+from datetime import datetime
 
-id = "cu.usbserial-110"  #id of Arduino on computer
-arduino = serial.Serial(port=f'/dev/{id}', baudrate=9600, timeout=0.1)  #id of Arduino on computer
-print("Connection Successful")  #Let user know Arduino is connected
+# Serial Configuration
+serial_port = "COM8"
+baud_rate = 9600
 
-def read() -> str:
-    """Read data from Arduino. Return data as a string."""
-    data = ""
-    while len(data) < 1:  # When data is empty
-        data = arduino.readline()  # Read data collected on Arduino (sensors)
-    return data.decode('utf-8')  # utf-8 is the same as ascii
+# Open the serial port and debug
+try:
+    ser = serial.Serial(serial_port, baud_rate, timeout=2)
+    time.sleep(2)  # Allow the serial connection to initialize
+except Exception as e:
+    print(f"Failed to open serial port: {e}")
+    ser = None
+
+#local storage
+csv_file = "collected_data.csv"
+
+#header for the csv file for easier extract later on. also the order of collected data -> keep in mind when upload to API later on
+try:
+    with open(csv_file, "x", newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(["timestamp", "DHT_temperature", "DHT_humidity", "BME_temperature", "BME_pressure", "BME_humidity"])
+except FileExistsError:
+    pass
 
 
-humidity = []  # List to store humidity data
-temperature = []  # List to store temperature data
-t = 0  # Variable to store time elapsed in seconds
-for i in range(172801):  # Loop for 17800 seconds (=48 hours)
-    msg = read()  # Read data from Arduino
-    print(t, msg)  # To check what data the program reads
-    time.sleep(1)  # Wait 1 second
-    t += 1  # Add 1 to the variable t corresponding to the seconds passed
+dht_data = None
+bme_data = None
 
-    # Record the data once in 5 minutes
-    if t%300 == 0:  # Per 5 minute interval (=300 seconds)
-        # Storing Data in CSV File
-        date = datetime.datetime.now()  # Find time data of the moment
-        line = f'{t},{date},{msg}\n'  # Time in seconds, datetime, msg containing sensor readings
-        with open('final_readings.csv', mode='a') as f:  # Open file in mode append
-            data = f.writelines(line)  # Add line to CSV file
+def save_to_csv(timestamp, dht_temp, dht_hum, bme_temp, bme_pres, bme_hum):
+    with open(csv_file, "a", newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow([timestamp, dht_temp, dht_hum, bme_temp, bme_pres, bme_hum])
 
-        # Storing Data in Sensors on Server
-        a = list(msg.split(',')) # Split the msg (data from Arduino) into a list
-        sensor_id = 29  # First of our sensors on the server
-        r = 0  # Index of the list of readings
-        while sensor_id <= 34:  # Loop through all of our sensors
-            record = {f'sensor_id':sensor_id, 'value':a[r]}  # Create a record for each sensor
-            print(record)  # To check what data the program sends to the server
-            answer = requests.post(f'http://{ip}/reading/new', json=record, headers=header)  # Send data to server
-            sensor_id += 1  # Next sensor
-            r += 1  # Next reading
+
+def process_data(line):
+    global dht_data, bme_data
+
+    try:
+        parts = line.strip().split(',')
+        sensor_type = parts[0]
+
+        #timestamp
+        current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+        # Process DHT11 data
+        if sensor_type == "DHT11":
+            dht_humidity = float(parts[1]) if len(parts) > 1 else None
+            dht_temp = float(parts[2]) if len(parts) > 2 else None
+            dht_data = (dht_temp, dht_humidity)  #store the data temporarily
+            print(f"DHT11 - Temperature: {dht_temp}, Humidity: {dht_humidity}")
+
+        # Process BME280 data
+        elif sensor_type == "BME280":
+            bme_temp = float(parts[1]) if len(parts) > 1 else None
+            bme_pressure = float(parts[2]) if len(parts) > 2 else None
+            bme_humidity = float(parts[3]) if len(parts) > 3 else None
+            bme_data = (bme_temp, bme_pressure, bme_humidity)  #store the data temporarily
+            print(f"BME280 - Temperature: {bme_temp}, Pressure: {bme_pressure}, Humidity: {bme_humidity}")
+
+
+        if dht_data and bme_data: #when both of them are collected, then save in the local file
+            dht_temp, dht_humidity = dht_data
+            bme_temp, bme_pressure, bme_humidity = bme_data
+            save_to_csv(current_time, dht_temp, dht_humidity, bme_temp, bme_pressure, bme_humidity)
+            print(f"Logged data: {current_time}, {dht_temp}, {dht_humidity}, {bme_temp}, {bme_pressure}, {bme_humidity}")
+
+            dht_data = None
+            bme_data = None
+    #debug
+    except (ValueError, IndexError) as e:
+        print(f"Error processing line: {line}, Error: {e}")
+
+
+try:
+    if ser: #if serial port has been successfully opened and initialized.
+        print("Listening for sensor data...")
+        while True:
+            if ser.in_waiting > 0:
+                line = ser.readline().decode('utf-8').strip()
+                if line:
+                    process_data(line)
+
+except KeyboardInterrupt:
+    print("Stopping script.")
+finally:
+    if ser:
+        ser.close()
