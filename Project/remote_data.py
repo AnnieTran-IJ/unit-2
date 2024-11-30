@@ -2,7 +2,6 @@
 import requests
 from datetime import datetime
 
-from Tools.scripts.highlight import default_html
 
 ip = "192.168.4.137"
 request = requests.get(f"http://{ip}/readings")
