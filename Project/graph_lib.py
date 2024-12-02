@@ -7,38 +7,52 @@ import numpy as np
 # print(humidity)
 # print(pressure)
 
-def plot_graphs(temperature,humidity,pressure):
+# data = {
+#     "temperature": [values],
+#     "humidity": [values],
+#     "pressure": [values],
+# }
+
+
+def quad(a, b, c, x):
+    return a * x ** 2 + b * x + c
+
+def plot_quad_model(value):
+    x = [i for i in range(len(value))]
+    a,b,c = np.polyfit(x,value,2)
+    x_model = [min(x),max(x)]
+    y_model = [quad(a,b,c,min(x)),quad(a,b,c,max(x))]
+    plt.plot(x_model,y_model)
+    return ("quadratic model plotted successfully")
+
+def plot_avg(v1,v2):
     avg = []
-    x_temp = [i for i in range(len(temperature))]
-    x_hum = [i for i in range(len(humidity))]
-    x_pre = [i for i in range(len(pressure))]
+    if len(v1)>len(v2):
+        for i in range(len(v2)):
+            avg.append((v1[i]+v2[i])/2)
+    else:
+        for i in range(len(v1)):
+            avg.append((v1[i]+v2[i])/2)
+    return avg
 
 
-    a_t,b_t,c_t = np.polyfit(x_temp,temperature,2)
-    a_h,b_h,c_h = np.polyfit(x_hum,humidity,2)
-    a_p,b_p,c_p = np.polyfit(x_pre,pressure,2)
+# mean, standard deviation, minimum, maximum, and median
+def calc_statistics(values):
+    stats = {
+        "mean": np.mean(values),
+        "std_dev": np.std(values),
+        "min": np.min(values),
+        "max": np.max(values),
+        "median": np.median(values),
+    }
+    return stats
 
-    def quad(a,b,c,x):
-        return a*x**2 + b*x + c
 
-    quad_hum = quad(a_h,b_h,c_h,x_hum)
-    quad_pre = quad(a_h,b_h,c_h,x_pre)
-
-    xt_model = [min(x_temp),max(x_temp)]
-    yt_model = quad(a_t,b_t,c_t,x_temp)
-    xh_model = [min(x_hum),max(x_hum)]
-    yh_model = quad(a_h,b_h,c_h,x_hum)
-    xp_model = [min(x_pre),max(x_pre)]
-    yp_model = quad(a_p,b_p,c_p,x_pre)
-
-    plt.subplot(3,1,1)
-    plt.plot(x_temp,temperature,color="blue")
-    plt.plot(xt_model,yt_model, color = "green")
-
-    plt.subplot(3,1,2)
-    plt.plot(x_hum,humidity,color="blue")
-    plt.plot(xh_model,yh_model, color = "green")
-
-    plt.subplot(3,1,3)
-    plt.plot(x_pre,pressure,color="blue")
-    plt.plot(xp_model,yp_model, color = "green")
+def plot_data(data: dict, ylabel: str):
+    for key, values in data.items():
+        plt.plot(values, label=key)
+    plt.title("Data Plot")
+    plt.xlabel("Time")
+    plt.ylabel(ylabel)
+    plt.legend()
+    return("data plotted successfully")
