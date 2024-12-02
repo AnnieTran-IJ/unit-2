@@ -8,4 +8,6 @@
 print("Hello World")
 ```
 ## Proof of work
-*Run it with the input and output given*
+a)
+![image](https://github.com/user-attachments/assets/a28d64e2-5de5-475d-a210-de318444a3c2)
+
