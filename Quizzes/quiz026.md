@@ -1,6 +1,5 @@
 # Quiz 026
 
-## Flow Chart
 ## Code
 ```.py
 def flip(in_dict:dict):
