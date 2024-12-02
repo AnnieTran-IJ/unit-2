@@ -1,8 +1,4 @@
 # Quiz 027
-
-## Paper Solution
-
-## Flow Chart
 ## Code
 ```.py
 #a) Create a function sorts a dictionary by its values in ascending order.
