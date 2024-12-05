@@ -1,5 +1,8 @@
 # Quiz 026
 
+## Paper Solution
+![image](https://github.com/user-attachments/assets/48c1a8ea-0996-4dcc-b56c-06ce92d6dbbf)
+
 ## Code
 ```.py
 def flip(in_dict:dict):
