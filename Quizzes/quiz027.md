@@ -1,4 +1,7 @@
 # Quiz 027
+## Paper Solution
+![Uploading image.png…]()
+
 ## Code
 ```.py
 #a) Create a function sorts a dictionary by its values in ascending order.
