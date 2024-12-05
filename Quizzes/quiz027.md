@@ -1,6 +1,7 @@
 # Quiz 027
 ## Paper Solution
-![Uploading image.png…]()
+![image](https://github.com/user-attachments/assets/baca0a9a-49fd-40d4-b892-ada0e71c1268)
+
 
 ## Code
 ```.py
