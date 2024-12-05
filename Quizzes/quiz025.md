@@ -1,5 +1,8 @@
 # Quiz 025
 
+## Paper Solution
+![image](https://github.com/user-attachments/assets/bf8708a9-199d-470e-b220-e2d291cb8489)
+
 ## Code
 ```.py
 def count_letters(lexicon: dict, msg: str) -> dict:
