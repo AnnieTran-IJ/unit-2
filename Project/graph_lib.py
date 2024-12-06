@@ -13,6 +13,13 @@ import numpy as np
 #     "pressure": [values],
 # }
 
+def moving_average(windowSize:int, x:list) -> list:
+    x_smoothed = []
+    for i in range(0,len(x)-windowSize):
+        x_section = x[i:i+windowSize]
+        x_average = sum(x_section)/windowSize
+        x_smoothed.append(x_average)
+    return x_smoothed
 
 def quad(a, b, c, x):
     return a * x ** 2 + b * x + c
@@ -48,11 +55,10 @@ def calc_statistics(values):
     return stats
 
 
-def plot_data(data: dict, ylabel: str):
-    for key, values in data.items():
-        plt.plot(values, label=key)
-    plt.title("Data Plot")
-    plt.xlabel("Time")
-    plt.ylabel(ylabel)
-    plt.legend()
+def plot_data(subplot,x:list,y:list, ylabel,yunits):
+    subplot.plot(x,y,color = "#c7d9e5")
+    subplot.set_title(ylabel)
+    subplot.set_xlabel("Time (min)")
+    subplot.set_ylabel(ylabel+yunits)
+    subplot.legend()
     return("data plotted successfully")
