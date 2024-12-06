@@ -1,4 +1,4 @@
-# Unit 2: A Distributed Weather Station for ISAK
+![3](https://github.com/user-attachments/assets/6f1c41bb-4762-41d5-a669-a8fcefd3a577)# Unit 2: A Distributed Weather Station for ISAK
 
 ## Criteria A: Planning
 
@@ -55,6 +55,14 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 ![System Diagrams unit 2 (1)](https://github.com/user-attachments/assets/7ec53d20-7afa-4279-8ac2-b5798e38f4db)
 
 **Fig.1** System diagram (HL) for the proposed system to visualize and analyze temperature and humidity data on our campus. Physical variables were measured with a network of DHT11/BMP280 sensors locally. A remote server provides an API for remote monitoring and storage via the ISAK-S network. 
+![System Diagrams(2)](https://github.com/user-attachments/assets/32b39860-84fc-4718-bbd3-f137cc38b8cb)
+![2](https://github.com/user-attachments/assets/e66662a2-0d0d-4a31-b10e-53b7e23baec1)
+![3](https://github.com/user-attachments/assets/085a9558-75a2-4d2e-9aec-8d690f5db1d9)
+
+**Fig.3, Fig.4, Fig.5** Show the location of the DHT11 and BME280 sensors connected with a computer being placed around the R3-10 dormitory, where the distance respective to the closest window varies in order to compare the change in temperature, humidity and pressure. As noted in each figure, the order of collection location is: on the table below the TV, 5m next to the big window in the common room (the first 12 hours); on the table 1m next to the big window in the common room (the next 12 hours); on the center table in the kitchen, 3m next to the window in the kitchen (the third cycle of 12 hours); on a table in a student's room, 3m from the big window (the last 12 hours).
+
+## Flow Diagrams
+
 ## Record of Tasks
 | Task No | Planned Action                                                                                       | Planned Outcome                                                                                                                                                                                            | Time estimate | Target completion date | Criterion |
 |---------|------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
