@@ -148,13 +148,13 @@ void setup() {
     delay(2000);
 }
 ```
-In this section, we define the setup of the Arduino and initialize communication with the sensors. First, we begin serial communication between the Arduino and the computer using Serial.begin(9600), which sets the baud rate to 9600 for debugging and data logging. We also set for Serial Monitor to send messages to confirm the progress of the setup process.
+In this section, we define the setup of the Arduino and initialize communication with the sensors. First, we begin serial communication between the Arduino and the computer using `Serial.begin(9600)`, which sets the baud rate to 9600 for debugging and data logging. We also set for Serial Monitor to send messages to confirm the progress of the setup process.
 
-Next, we initialize the BME280 sensor. Using Serial.println(F("Initializing BME280...")), a message is printed to indicate the start of the initialization process. The bme.begin(0x76) method is then called on the bme object, which aims to communicate with the BME280 sensor using the I2C address 0x76. The return value, stored in the bmeStatus variable, is checked to confirm if the sensor was successfully detected. If the sensor is not found, an error message is printed, and the program enters an infinite loop (while (1);), stopping further execution. If the sensor is found, a success message is printed to the Serial Monitor.
+Next, we initialize the BME280 sensor. Using `Serial.println(F("Initializing BME280...")`, a message is printed to indicate the start of the initialization process. The `bme.begin(0x76)` method is then called on the bme object, which aims to communicate with the BME280 sensor using the I2C address 0x76. The return value, stored in the bmeStatus variable, is checked to confirm if the sensor was successfully detected. If the sensor is not found, an error message is printed, and the program enters an infinite loop `while (1);`, stopping further execution. If the sensor is found, a success message is printed to the Serial Monitor.
 
-After the BME280, the program proceeds to initialize the DHT11 sensor. A message is printed using Serial.println("Initializing DHT11...") to indicate this process. The dht.begin() method is then called on the dht object to configure the DHT11 sensor for data collection. Upon successful initialization, a confirmation message is printed.
+After the BME280, the program proceeds to initialize the DHT11 sensor. A message is printed using `Serial.println("Initializing DHT11...")` to indicate this process. The `dht.begin()` method is then called on the dht object to configure the DHT11 sensor for data collection. Upon successful initialization, a confirmation message is printed.
 
-Finally, a general readiness message ("-- Sensors Ready --") is printed to signify that all sensors have been successfully set up and are ready to operate. A delay of 2000 milliseconds is added to provide a brief pause before the program proceeds to the main loop, ensuring that the sensors are fully stabilized.
+Finally, a general readiness message `"-- Sensors Ready --"` is printed to signify that all sensors have been successfully set up and are ready to operate. A delay of 2000 milliseconds is added to provide a brief pause before the program proceeds to the main loop, ensuring that the sensors are fully stabilized.
 
 
 # Criteria D: Functionality
