@@ -155,7 +155,54 @@ Next, we initialize the BME280 sensor. Using `Serial.println(F("Initializing BME
 After the BME280, the program proceeds to initialize the DHT11 sensor. A message is printed using `Serial.println("Initializing DHT11...")` to indicate this process. The `dht.begin()` method is then called on the dht object to configure the DHT11 sensor for data collection. Upon successful initialization, a confirmation message is printed.
 
 Finally, a general readiness message `"-- Sensors Ready --"` is printed to signify that all sensors have been successfully set up and are ready to operate. A delay of 2000 milliseconds is added to provide a brief pause before the program proceeds to the main loop, ensuring that the sensors are fully stabilized.
+#### 4. Main Loop Function:
+```.C++
+void loop() {
+    // Read BME280 Data
+    float bmeTemperature = bme.readTemperature();
+    float bmePressure = bme.readPressure() / 100.0F;
+    float bmeHumidity = bme.readHumidity();
 
+
+    // Read DHT11 Data
+    float dhtHumidity = dht.readHumidity();
+    float dhtTemperature = dht.readTemperature();
+
+
+    // Handle potential read errors
+    if (isnan(dhtHumidity) || isnan(dhtTemperature)) {
+        Serial.println("DHT11,ERROR");
+    } else {
+        Serial.print("DHT11,");
+        Serial.print(dhtHumidity);
+        Serial.print(",");
+        Serial.print(dhtTemperature);
+    }
+    Serial.println();
+    // Output BME280 Data
+    Serial.print("BME280,");
+    Serial.print(bmeTemperature);
+    Serial.print(",");
+    Serial.print(bmePressure);
+    Serial.print(",");
+    Serial.print(bmeHumidity);
+    Serial.println();
+
+
+    // Delay before next reading
+    delay(60000); 
+
+In this section, we define the loop function of the program, where the Arduino continuously collects and processes data from the BME280 and DHT11 sensors. The loop begins by reading environmental data from the BME280 sensor. The methods `bme.readTemperature()`, `bme.readPressure()`, and `bme.readHumidity()` retrieve the temperature (in Celsius), pressure (in Pascals, later converted to hectopascals), and relative humidity, respectively. These values are stored in the variables bmeTemperature, bmePressure, and bmeHumidity.
+
+Next, we set the program to collect data from the DHT11 sensor. The methods `dht.readHumidity()` and `dht.readTemperature()` retrieve the humidity and temperature readings, which are stored in the variables dhtHumidity and dhtTemperature. These readings are then validated to ensure they are not invalid values (i.e., NaN or "not a number"). If any DHT11 reading is invalid, an error message "DHT11,ERROR" is printed to the Serial Monitor. If the readings are valid, the program outputs the data in the format DHT11,<humidity>,<temperature>.
+
+After processing the DHT11 data, the program prints the BME280 data in the format BME280,<temperature>,<pressure>,<humidity> to the Serial Monitor. Each piece of data is separated by a comma, allowing for easy parsing in external applications.
+```
+In this section, we define the loop function of the program, where the Arduino continuously collects and processes data from the BME280 and DHT11 sensors. The loop begins by reading environmental data from the BME280 sensor. The methods `bme.readTemperature()`, `bme.readPressure()`, and `bme.readHumidity()` retrieve the temperature (in Celsius), pressure (in Pascals, later converted to hectopascals), and relative humidity, respectively. These values are stored in the variables bmeTemperature, bmePressure, and bmeHumidity.
+
+Next, we set the program to collect data from the DHT11 sensor. The methods `dht.readHumidity()` and `dht.readTemperature()` retrieve the humidity and temperature readings, which are stored in the variables dhtHumidity and dhtTemperature. These readings are then validated to ensure they are not invalid values (i.e., NaN or "not a number"). If any DHT11 reading is invalid, an error message "DHT11,ERROR" is printed to the Serial Monitor. If the readings are valid, the program outputs the data in the format DHT11,<humidity>,<temperature>.
+
+After processing the DHT11 data, the program prints the BME280 data in the format BME280,<temperature>,<pressure>,<humidity> to the Serial Monitor. Each piece of data is separated by a comma, allowing for easy parsing in external applications.
 ### Success Criteria Addressed: 2
 # Criteria D: Functionality
 
