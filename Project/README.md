@@ -100,6 +100,61 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 * Try-except statement
 * If-else conditional statement
 ## Development
+### Code in Arduino IDE
+To collect and read data from two sensors, BME280 and DHT11, around the dormitory, we developed a program that gathers 2 variables from the DHT11 sensor and 3 variables from BME280. This data is then uploaded to the Arduino chip using the Arduino IDE. The following code illustrates this process.
+
+Cited from the file combined_arduino.ino:
+#### 1. Library configuration:
+```.C++
+#include <Wire.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BME280.h>
+#include "DHT.h"
+```
+In the first 4 lines, we called out libraries that enable interaction with sensors and facilitate communication between the Arduino board and the computer. The `Wire.h` library allows for communication with I2C devices. The `Adafruit_Sensor.h` and `Adafruit_BME280.h` libraries enable the Arduino to interact with the BME280 sensor. Similarly, the `DHT.h` library is used to control the DHT11 sensor.
+
+#### 2. Sensor Configuration:
+```.C++
+// BME280 Configuration
+Adafruit_BME280 bme;
+
+// DHT11 Configuration
+#define DHTPIN 8      // Digital pin connected to the DHT sensor
+#define DHTTYPE DHT11 // DHT 11
+DHT dht(DHTPIN, DHTTYPE);
+```
+In the next 4 lines, we first create an instance of the BME280 sensor, referred to as bme. This serves as a connection between our Arduino code and the physical BME280 sensor. Next, we specify the pin on the Arduino to which the DHT11 sensor is connected, and we establish an identity for the sensor so that it can be used again later.
+
+#### 3. Setup Function:
+```.C++
+void setup() {
+    Serial.begin(9600);
+
+    // Initialize BME280
+    Serial.println(F("Initializing BME280..."));
+    bool bmeStatus = bme.begin(0x76);
+    if (!bmeStatus) {
+        Serial.println("Could not find a valid BME280 sensor, check wiring!");
+        while (1);
+    }
+    Serial.println("BME280 initialized successfully!");
+
+    // Initialize DHT11
+    Serial.println("Initializing DHT11...");
+    dht.begin();
+    Serial.println("DHT11 initialized successfully!");
+
+    Serial.println("-- Sensors Ready --");
+    delay(2000);
+}
+```
+In this section, we define the setup of the Arduino and initialize communication with the sensors. First, we begin serial communication between the Arduino and the computer using Serial.begin(9600), which sets the baud rate to 9600 for debugging and data logging. We also set for Serial Monitor to send messages to confirm the progress of the setup process.
+
+Next, we initialize the BME280 sensor. Using Serial.println(F("Initializing BME280...")), a message is printed to indicate the start of the initialization process. The bme.begin(0x76) method is then called on the bme object, which aims to communicate with the BME280 sensor using the I2C address 0x76. The return value, stored in the bmeStatus variable, is checked to confirm if the sensor was successfully detected. If the sensor is not found, an error message is printed, and the program enters an infinite loop (while (1);), stopping further execution. If the sensor is found, a success message is printed to the Serial Monitor.
+
+After the BME280, the program proceeds to initialize the DHT11 sensor. A message is printed using Serial.println("Initializing DHT11...") to indicate this process. The dht.begin() method is then called on the dht object to configure the DHT11 sensor for data collection. Upon successful initialization, a confirmation message is printed.
+
+Finally, a general readiness message ("-- Sensors Ready --") is printed to signify that all sensors have been successfully set up and are ready to operate. A delay of 2000 milliseconds is added to provide a brief pause before the program proceeds to the main loop, ensuring that the sensors are fully stabilized.
 
 
 # Criteria D: Functionality
