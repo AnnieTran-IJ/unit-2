@@ -156,7 +156,7 @@ After the BME280, the program proceeds to initialize the DHT11 sensor. A message
 
 Finally, a general readiness message `"-- Sensors Ready --"` is printed to signify that all sensors have been successfully set up and are ready to operate. A delay of 2000 milliseconds is added to provide a brief pause before the program proceeds to the main loop, ensuring that the sensors are fully stabilized.
 
-
+### Success Criteria Addressed: 2
 # Criteria D: Functionality
 
 A 7 min video demonstrating the proposed solution with narration
