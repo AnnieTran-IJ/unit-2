@@ -24,7 +24,7 @@ Considering the budgetary constraints of the client and the hardware requirement
 
 1. The solution provides a visual representation of the Humidity, Temperature, and atmospheric pressure (HL) values inside a dormitory (Local) and outside the house (Remote) for a period of a minimum of 48 hours.
 - **Issues tackled:** This solution helps solve the shortage of insight into the environmental conditions over time, both inside and outside the dormitory, which could help in identifying patterns or irregularities.
-2. ```[HL]``` The local variables will be measured using a set of 3 sensors around the dormitory.
+2. ```[HL]``` The local variables will be measured using a set of 2 sensors around the dormitory at 4 different locations.
 - **Issues tackled:** Data collection can be spatially distributed to accurately reflect variations in environmental conditions across different areas of the dormitory.
 3. The solution provides mathematical modeling for the Humidity, Temperature, and atmospheric pressure (HL) levels for each Local and Remote location. ```(SL: linear model)```, ```(HL: non-linear model)```
 - **Issues tackled:** This solution resolves the difficulty in understanding the relationships between variables and the need for precise modeling to predict how these factors interact locally and remotely.
