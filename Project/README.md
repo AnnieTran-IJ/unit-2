@@ -422,7 +422,6 @@ On successful login, the program calls upload_data(sensor_id, value, auth) to se
 
 ### Success Criteria Addressed: 5
 ### Code in Pycharm - Graphing
-Code in Pycharm - Graphing 
 To provide a clear overview of temperature, humidity, and atmospheric pressure data from both local and remote servers, we created individual graphs representing each dataset. For a more effective analysis, we organized the data into three distinct sets:
 Raw data combined with smoothed data
 Data with a non-linear trend line and prediction based on it
