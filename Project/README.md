@@ -422,6 +422,66 @@ On successful login, the program calls upload_data(sensor_id, value, auth) to se
 
 ### Success Criteria Addressed: 5
 ### Code in Pycharm - Graphing
+Code in Pycharm - Graphing 
+To provide a clear overview of temperature, humidity, and atmospheric pressure data from both local and remote servers, we created individual graphs representing each dataset. For a more effective analysis, we organized the data into three distinct sets:
+Raw data combined with smoothed data
+Data with a non-linear trend line and prediction based on it
+Data analysis that includes annotations for the standard deviation, minimum, maximum, and median values.
+
+####1. Raw data combined with smoothed data and cubic model
+
+Cited from file `graphs_local.py`:
+```
+g1 = fig.add_subplot(gs[0, 0])
+xDT = data["time"]
+yDT = data["temperature_DHT"]
+yDT_smoothed = moving_average(ws,yDT)
+print(plot_data(g1,xDT,yDT,"Temperature (DHT)"," (°C)"))
+g1.plot(xDT[int(ws/2):len(yDT_smoothed)+int(ws/2)],yDT_smoothed,color="#577c8e")
+print(plot_cub_model(yDT))
+g1.legend(['raw data', 'smoothed data', 'cubic model'],loc = 'lower right', fontsize = 'x-small')
+```
+
+Cited from file `graph_lib.py`:
+```
+def moving_average(windowSize:int, x:list) -> list:
+    x_smoothed = []
+    for i in range(0,len(x)-windowSize):
+        x_section = x[i:i+windowSize]
+        x_average = sum(x_section)/windowSize
+        x_smoothed.append(x_average)
+    return x_smoothed
+
+def cub(a, b, c, d, x):
+    return a * x ** 3 + b * x ** 2 + c * x + d
+
+
+def plot_cub_model(value):
+    x = [i for i in range(len(value))]
+    coefficients = np.polyfit(x, value, 3)
+    x_model = np.linspace(min(x), max(x), 500)
+    y_model = np.polyval(coefficients, x_model)
+    plt.plot(x_model, y_model,color="#9b495d")
+    return "Cubic model plotted successfully"
+
+def plot_data(subplot,x:list,y:list, ylabel,yunits):
+    subplot.plot(x,y,color = "#c7d9e5")
+    subplot.set_title(ylabel)
+    subplot.set_xlabel("Time (hr)")
+    subplot.set_ylabel(ylabel+yunits)
+    x_l = []
+    for t in range(len(x)):
+        if (t)%360 == 0 and t+13<=len(x):
+            x_l.append(x[t+13][11:-3])
+    subplot.set_xticklabels(x_l)
+    subplot.set_xticks(np.arange(13, len(x) + 1,360))
+    return("data plotted successfully")
+```
+
+![image (12)](https://github.com/user-attachments/assets/0430af1b-e87b-44c2-a1eb-ad7a412311fd)
+
+**Fig. 10** shows local temperature, humidity, and pressure measured by the DMT11 sensor on the left and BME280 on the right with raw and smoothed data and cubic model. 
+
 ### Success Criteria Addressed: 1,3,4,6
 # Criteria D: Functionality
 
