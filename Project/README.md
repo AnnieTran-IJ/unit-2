@@ -408,7 +408,8 @@ On successful login, the program calls upload_data(sensor_id, value, auth) to se
 A 7 min video demonstrating the proposed solution with narration
 
 ## Scientific Poster Investigating the Data
-[Project 2 Comp Sci Science Poster.pdf](https://github.com/user-attachments/files/18053541/Project.2.Comp.Sci.Science.Poster.pdf)
+![Project 2 Comp Sci Science Poster](https://github.com/user-attachments/assets/26c06a02-5691-493e-830a-706d7a12689a)
+(PDF version for clearer graphs) [Project 2 Comp Sci Science Poster.pdf](https://github.com/user-attachments/files/18053541/Project.2.Comp.Sci.Science.Poster.pdf)
 
 # Source: 
 (1) https://cattree.uk/humidifiers-and-their-impact-on-cats/#:~:text=Cats%20can%20experience%20various%20respiratory,easier%20and%20more%20comfortable%20breathing.
