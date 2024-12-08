@@ -66,6 +66,7 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 3. On the center table in the kitchen, 3 meters from the kitchen window (third cycle of 12 hours)
 4. On a table in a student's room, 3 meters from the large window (last 12 hours)
 
+## Data Storage
 
 ## Flow Diagrams
 
