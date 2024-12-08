@@ -72,6 +72,7 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 
 ### 3
 ![image](https://github.com/user-attachments/assets/9b4b2ce2-44f5-44e3-9704-608c87124e9c)
+
 **Fig.5** shows the flow diagram for one of the most used functions in the graphing part of this project: plot_data(). This function plots a graph from the parameters passed into the function, with spaced out xticks labels. 
 
 
