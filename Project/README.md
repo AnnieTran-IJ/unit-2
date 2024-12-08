@@ -77,6 +77,10 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 
 **Fig.6** shows the flow diagram for ```upload_data_from_csv```, the function responsible for uploading the data onto the API from the csv file after saving the data entries in the csv file. 
 
+![image](https://github.com/user-attachments/assets/2bf25b2c-f8c0-44ee-ac39-d588f540d5d2)
+
+**Fig.7** shows the flow diagram for the algorithm responsible for retrieving the data from API and processing it to graphable data.  
+
 ## Record of Tasks
 | Task No | Planned Action                                                                                       | Planned Outcome                                                                                                                                                                                            | Time estimate | Target completion date | Criterion |
 |---------|------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------|------------------------|-----------|
@@ -312,7 +316,8 @@ For this next part, the overview is that once data from both sensors is availabl
 For debugging purposes, the last two lines indicate that if a ValueError occurs (such as due to an invalid data type) or an IndexError arises (such as from missing data fields), the exception will be caught, and an error message will be printed. This prevents the program from crashing.
 
 ![image](https://github.com/user-attachments/assets/b848edc2-4aad-4cb7-b384-5cd4e6254a30)
-**Fig.5** A screenshot of the first 20 lines of the csv file.
+
+**Fig.8** A screenshot of the first 20 lines of the csv file.
 #### 2. Remote storage:
 Cited from the file `upload_data.py`:
 ```.C++
@@ -355,7 +360,8 @@ Next, we create the `sensor_ids` dictionary to establish a clear mapping between
 
 We got these IDs using `requests.post()` and this can be found in the file `upload_data.py`
 ![image](https://github.com/user-attachments/assets/a8f28ff2-1d02-4ae1-8406-cd27d9969f48)
-**Fig.6** Screenshot of our sensors’ unique identifiers on ISAK-S.
+
+**Fig.9** Screenshot of our sensors’ unique identifiers on ISAK-S.
 ```.C++
 def upload_data_from_csv(csv_file, sensor_ids):
    global timestamp
