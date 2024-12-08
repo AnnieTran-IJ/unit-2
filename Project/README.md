@@ -67,6 +67,11 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 4. On a table in a student's room, 3 meters from the large window (last 12 hours)
 
 ## Data Storage
+1. Save data entry from the sensors into a dictionary
+2. Write the dictionary in a csv file
+3. Upload the data from the csv file on the API
+(insert image here)
+**Fig.5** data being uploaded
 
 ## Flow Diagrams
 
