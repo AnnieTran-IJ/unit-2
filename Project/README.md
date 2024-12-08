@@ -419,7 +419,8 @@ On successful login, the program calls upload_data(sensor_id, value, auth) to se
 ### Success Criteria Addressed: 1,3,4,6
 # Criteria D: Functionality
 
-A 7 min video demonstrating the proposed solution with narration
+video:
+https://drive.google.com/file/d/1flFR3hPgdADL09FVJwkAD0dLhgzMOXHi/view?usp=sharing
 
 ## Scientific Poster Investigating the Data
 (PDF version for clearer graphs) [Project 2 Comp Sci Science Poster.pdf](https://github.com/user-attachments/files/18053541/Project.2.Comp.Sci.Science.Poster.pdf)
