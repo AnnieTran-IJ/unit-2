@@ -28,7 +28,7 @@ Considering the budgetary constraints of the client and the hardware requirement
 - **Issues tackled:** Data collection is spatially distributed to accurately reflect variations in environmental conditions across different areas of the dormitory.
 3. The solution provides mathematical modeling for the Humidity, Temperature, and atmospheric pressure (HL) levels for each Local and Remote location. ```(SL: linear model)```, ```(HL: non-linear model)```
 - **Issues tackled:** This solution resolves the difficulty in understanding the relationships between variables and the need for precise modeling to predict how these factors interact locally and remotely.
-4. The solution provides a comparative analysis of the Humidity, Temperature, and atmospheric pressure (HL) levels for each Local and Remote location including mean, standard deviation, minimum, maximum, and median. 
+4. The solution provides a comparative analysis of the Humidity, Temperature, and atmospheric pressure (HL) levels for each Local and Remote location including standard deviation, minimum, maximum, and median. 
 - **Issues tackled:** This solution helps assess variability and identify extreme values or trends.
 5. ```(SL)```The local samples are stored in a CSV file and ```(HL)``` posted to the remote server as a backup. 
 - **Issues tackled:** This solution resolves the risk of data loss and lack of organized storage and accessibility for collected data over time.
