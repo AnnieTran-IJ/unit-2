@@ -216,12 +216,12 @@ import time
 import csv
 serial_port = "COM8"
 baud_rate = 9600
-csv_file = "collected_data.csv"
+csv_file = "final_data.csv"
 ```
 Firstly, we import the serial library, which allows the Python program to communicate with the Arduino via a serial connection and receive the sensor data. Besides, we also imported the `time` library, providing time-related functions. Specifically in this project, we are using it to create delays and recording timestamps. Then, the library `csv` allows us to create, write, and read structured data. 
 
 
-The line `serial_port = “COM8” specifies the serial port through which the computer communicates with the Arduino, and this value is personalized to the data collector’s computer. After that, `baud_rate = 9600` defines the baud rate, or how quickly data is transmitted and received, which matches with the rate specified in the Arduino code (mentioned above). Lastly, `csv_file = "collected_data.csv"` sets the name of the file where the collected sensor data will be saved.
+The line `serial_port = “COM8” specifies the serial port through which the computer communicates with the Arduino, and this value is personalized to the data collector’s computer. After that, `baud_rate = 9600` defines the baud rate, or how quickly data is transmitted and received, which matches with the rate specified in the Arduino code (mentioned above). Lastly, `csv_file = "final_data.csv"` sets the name of the file where the collected sensor data will be saved.
 ```.C++
 try:
    with open(csv_file, "x", newline='') as f:
@@ -294,6 +294,9 @@ For this next part, the overview is that once data from both sensors is availabl
        print(f"Error processing line: {line}, Error: {e}")
 ```
 For debugging purposes, the last two lines indicate that if a ValueError occurs (such as due to an invalid data type) or an IndexError arises (such as from missing data fields), the exception will be caught, and an error message will be printed. This prevents the program from crashing.
+
+![image](https://github.com/user-attachments/assets/b848edc2-4aad-4cb7-b384-5cd4e6254a30)
+**Fig.5** A screenshot of the first 20 lines of the csv file.
 #### 2. Remote storage:
 ### Success Criteria Addressed: 5
 
