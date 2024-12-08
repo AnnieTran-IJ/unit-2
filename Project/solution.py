@@ -2,7 +2,7 @@ import serial
 import time
 import csv
 from datetime import datetime
-
+#need a total of 2880 lines of data
 # Serial Configuration
 serial_port = "COM8"
 baud_rate = 9600
