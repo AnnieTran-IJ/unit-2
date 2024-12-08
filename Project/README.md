@@ -206,7 +206,7 @@ Next, we set the program to collect data from the DHT11 sensor. The functions `d
 After processing the DHT11 data, the program prints the BME280 data in the format BME280,<temperature>,<pressure>,<humidity> to the Serial Monitor. Each piece of data is separated by a comma, allowing for easy extracting in the next stage.
 
 ### Success Criteria Addressed: 2
-### Code in Pycharm
+### Code in Pycharm - Data Management
 In order to save the data for further analysis, we wrote a Python program to store all the collected sensor readings in a local CSV file. Additionally, we decided to send the data to a remote storage location on the ISAK-S network as a backup to safeguard against risks associated with saving data locally, such as file corruption, accidental deletion, or hardware failure.
 #### 1. Local storage:
 From file `solution.py`:
@@ -393,7 +393,8 @@ If the server is reachable (checked by the function `check_connection()` in the 
 On successful login, the program calls upload_data(sensor_id, value, auth) to send the data to the server. If the server is unavailable, `failure_count` increases by 1 and the program waits 60 seconds `time.sleep(60)` before retrying.
 
 ### Success Criteria Addressed: 5
-
+### Code in Pycharm - Graphing
+### Success Criteria Addressed: 1,3,4,6
 # Criteria D: Functionality
 
 A 7 min video demonstrating the proposed solution with narration
