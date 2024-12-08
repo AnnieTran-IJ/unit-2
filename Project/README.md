@@ -298,6 +298,100 @@ For debugging purposes, the last two lines indicate that if a ValueError occurs 
 ![image](https://github.com/user-attachments/assets/b848edc2-4aad-4cb7-b384-5cd4e6254a30)
 **Fig.5** A screenshot of the first 20 lines of the csv file.
 #### 2. Remote storage:
+Cited from the file `upload_data.py`:
+```.C++
+import csv
+import socket
+import time
+import requests
+
+
+# API Configuration
+ip = "192.168.4.137"
+user = {"username": "A_square", "password": "Ann&Annie"}
+```
+To enable communication with a server and upload the collected data, several libraries are imported at the beginning of the script. The requests library is imported to facilitate HTTP requests, which will be used to send data to the server. The CSV library is included for handling CSV files, and the socket and time libraries are imported for potential network and time-related functionalities during the data upload process.
+Since the server's API requires user authentication for specific actions, we define the user credentials in our code using a JSON dictionary stored in the user variable. This dictionary includes the username and password that we will use to authenticate ourselves and gain access to upload our data. To ensure consistent and convenient access to the server, we store its IP address in a variable as a string. 
+```.C++
+def login():
+   try:
+       response = requests.post(f'http://{ip}/login', json=user)
+       response.raise_for_status()  # Raise an error for failed login attempts
+       cookie = response.json()["access_token"]
+       auth = {"Authorization": f"Bearer {cookie}"}
+       print("Login successful.")
+       return auth
+   except Exception as e:
+       print(f"Failed to log in: {e}")
+       return None
+```
+Here, we have a function to handle user authentication with the server. Within the try-except block, we send a POST request to server’s login endpoint by using the syntax `requests.post()`. If the login is successful, the server's response is converted to JSON format using response.json(). From this response, we extract the "access_token" field, which is the token used to authenticate subsequent requests. The extracted token is formatted as a Bearer token and stored in the `auth` dictionary under the key `Authorization`. This dictionary will be returned to serve as the authentication header for further requests to the server. If the login is successful, a message "Login successful." is printed to the console. Otherwise, the program prints an error message indicating the failure and returns None.
+```.C++
+sensor_ids = {
+   "DHT_temperature": 432,
+   "DHT_humidity": 433,
+   "BME_temperature": 434,
+   "BME_pressure": 435,
+   "BME_humidity": 436,
+}
+```
+Next, we create the `sensor_ids` dictionary to establish a clear mapping between the sensor data types and their corresponding identifiers on the remote database.
+
+We got these IDs using `requests.post()` and this can be found in the file `upload_data.py`
+![image](https://github.com/user-attachments/assets/a8f28ff2-1d02-4ae1-8406-cd27d9969f48)
+**Fig.6** Screenshot of our sensors’ unique identifiers on ISAK-S.
+```.C++
+def upload_data_from_csv(csv_file, sensor_ids):
+   global timestamp
+
+
+   try:
+       with open(csv_file, "r") as f:
+           reader = csv.DictReader(f)
+```
+The purpose of this function is to extract the data from the CSV file and upload it to a remote server. After mentioning the 2 variables to track timestamp and failed upload attempt, `with open(csv_file, "r")` block opens the specified CSV file for reading. Then, the `csv.DictReader` reads the file as a dictionary, where column headers act as keys and row data act as values.
+
+_*function upload_data_from_csv() continued:_
+```.C++
+           for row in reader:
+               timestamp = row["timestamp"]
+               print(f"Processing data for timestamp {timestamp}...")
+```
+Following that, a for loop processes each row in the CSV. For each row, a timestamp field is extracted and printed to indicate which timestamp's data is being processed. A nested for loop iterates over the `sensor_ids` dictionary. This allows the program to pair sensor fields with their corresponding IDs.
+```.C++
+               for field, sensor_id in sensor_ids.items():
+                   value = row.get(field)
+                   if value and value.lower() != "nan":
+                       try:
+                           value = float(value)
+```
+To retrieve a value for the current sensor field, we use the function `row.get()`.  If the value exists and is not "nan", it is converted to a float for processing. Any invalid values are skipped with an error message.
+```.C++
+                           # Ensure server connection
+                           if check_connection():
+                               auth = login()
+                               if not auth:
+                                   print("Skipping upload due to failed login.")
+                                   continue
+
+
+                               upload_data(sensor_id, value, auth)
+                           else:
+                               print("Server connection failed. Retrying later...")
+                               failure_count += 1
+                               time.sleep(60)  # Wait before retrying
+                       except ValueError:
+                           print(f"Invalid value for {field}: {value}. Skipping upload.")
+                       except Exception as e:
+                           print(f"Unexpected error while processing {field}: {e}")
+   except FileNotFoundError:
+       print(f"File {csv_file} not found.")
+   except Exception as e:
+       print(f"Error processing CSV file: {e}")
+```
+If the server is reachable (checked by the function `check_connection()` in the same file), the program attempts to log in by calling the login() function. If login fails, the program skips the upload for this row.
+On successful login, the program calls upload_data(sensor_id, value, auth) to send the data to the server. If the server is unavailable, `failure_count` increases by 1 and the program waits 60 seconds `time.sleep(60)` before retrying.
+
 ### Success Criteria Addressed: 5
 
 # Criteria D: Functionality
