@@ -95,7 +95,7 @@ def plot_data(subplot,x:list,y:list, ylabel,yunits):
     return("data plotted successfully")
 
 def plot_data1(subplot,x:list,y:list, ylabel,yunits):
-    subplot.plot(x,y,color = "#c7d9e5",linewidth=0.5)
+    subplot.plot(x,y,color = "#2b9b35",linewidth=0.5)
     subplot.set_title(ylabel)
     subplot.set_xlabel("Time (hr)")
     subplot.set_ylabel(ylabel+yunits)
