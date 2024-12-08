@@ -69,12 +69,13 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 
 ## Flow Diagrams
 
-
-### 3
 ![image](https://github.com/user-attachments/assets/9b4b2ce2-44f5-44e3-9704-608c87124e9c)
 
-**Fig.5** shows the flow diagram for one of the most used functions in the graphing part of this project: plot_data(). This function plots a graph from the parameters passed into the function, with spaced out xticks labels. 
+**Fig.5** shows the flow diagram for one of the most used functions in the graphing part of this project: ```plot_data()```. This function plots a graph from the parameters passed into the function, with spaced out xticks labels. 
 
+![image](https://github.com/user-attachments/assets/9a13271e-c708-422b-a801-1713eded76a9)
+
+**Fig.6** shows the flow diagram for ```upload_data_from_csv```, the function responsible for uploading the data onto the API from the csv file after saving the data entries in the csv file. 
 
 ## Record of Tasks
 | Task No | Planned Action                                                                                       | Planned Outcome                                                                                                                                                                                            | Time estimate | Target completion date | Criterion |
