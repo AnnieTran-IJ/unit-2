@@ -431,17 +431,6 @@ Data analysis that includes annotations for the standard deviation, minimum, max
 
 ####1. Raw data combined with smoothed data and cubic model
 
-Cited from file `graphs_local.py`:
-```
-g1 = fig.add_subplot(gs[0, 0])
-xDT = data["time"]
-yDT = data["temperature_DHT"]
-yDT_smoothed = moving_average(ws,yDT)
-print(plot_data(g1,xDT,yDT,"Temperature (DHT)"," (°C)"))
-g1.plot(xDT[int(ws/2):len(yDT_smoothed)+int(ws/2)],yDT_smoothed,color="#577c8e")
-print(plot_cub_model(yDT))
-g1.legend(['raw data', 'smoothed data', 'cubic model'],loc = 'lower right', fontsize = 'x-small')
-```
 
 Cited from file `graph_lib.py`:
 ```
@@ -455,7 +444,6 @@ def moving_average(windowSize:int, x:list) -> list:
 
 def cub(a, b, c, d, x):
     return a * x ** 3 + b * x ** 2 + c * x + d
-
 
 def plot_cub_model(value):
     x = [i for i in range(len(value))]
@@ -479,11 +467,151 @@ def plot_data(subplot,x:list,y:list, ylabel,yunits):
     return("data plotted successfully")
 ```
 
+Here, we have 3 functions:
+moving_average()
+plot_cub_model()
+plot_data()
+
+Moving average:
+```
+def moving_average(windowSize:int, x:list) -> list:
+    x_smoothed = []
+    for i in range(0,len(x)-windowSize):
+        x_section = x[i:i+windowSize]
+        x_average = sum(x_section)/windowSize
+        x_smoothed.append(x_average)
+    return x_smoothed
+```
+This function takes two parameters: windowSize (an integer) and x (a list). It starts with creating a new list for the smoothed x values. Then it goes into a for loop and repeats for length of list x minus windowSize. The process being repeated includes making a variable called x_section which is value of x from i to i+windowSize. It then takes the average of all these values (sum of everything in the list divided by windowSize). Then, that value is appended to the list x_smoothed and when the loop finishes, is returned. 
+
+We can consider cub() and plot_cub_model() together:
+```
+def plot_cub_model(value):
+    x = [i for i in range(len(value))]
+    coefficients = np.polyfit(x, value, 3)
+    x_model = np.linspace(min(x), max(x), 500)
+    y_model = np.polyval(coefficients, x_model)
+    plt.plot(x_model, y_model,color="#9b495d")
+    return "Cubic model plotted successfully"
+```
+In the plot_cub_model(), it takes in 1 parameter: value, which is a list. It starts with initializing x as i for every i in the range of the length of value. Coefficients is also intitialized as a list of cubic coefficients using np.polyfit. X_model is then set to 500 points between the smallest x and the biggest x, and y_model is set as the evaluated values of the cubic coefficients using the funtion numpy.polyval(). Then we plot the x and y model with the color “#9b495d" and return “Cubic model plotted successfully)
+
+Plot_data():
+```
+def plot_data(subplot,x:list,y:list, ylabel,yunits):
+    subplot.plot(x,y,color = "#c7d9e5")
+    subplot.set_title(ylabel)
+    subplot.set_xlabel("Time (hr)")
+    subplot.set_ylabel(ylabel+yunits)
+    x_l = []
+    for t in range(len(x)):
+        if (t)%360 == 0 and t+13<=len(x):
+            x_l.append(x[t+13][11:-3])
+    subplot.set_xticklabels(x_l)
+    subplot.set_xticks(np.arange(13, len(x) + 1,360))
+    return("data plotted successfully")
+```
+plot_data() takes in 5 parameters: subplot, x, y, ylabel, yunits. This function plots on subplot using the values passed into the function, anda also set the xticks label to recurring once every 6 hours. It returns “dataa plotted successfully’’ for debugging reasons. See fig 5 for more detail on this function. 
+
+
+Cited from file `graphs_local.py`:
+```
+g1 = fig.add_subplot(gs[0, 0])
+xDT = data["time"]
+yDT = data["temperature_DHT"]
+yDT_smoothed = moving_average(ws,yDT)
+print(plot_data(g1,xDT,yDT,"Temperature (DHT)"," (°C)"))
+g1.plot(xDT[int(ws/2):len(yDT_smoothed)+int(ws/2)],yDT_smoothed,color="#577c8e")
+print(plot_cub_model(yDT))
+g1.legend(['raw data', 'smoothed data', 'cubic model'],loc = 'lower right', fontsize = 'x-small')
+```
+This part uses all the values as parameters and pass them into the functions to create graphs. This is also used for many other graphs, whether they are remote data or local data. 
+
 ![image (12)](https://github.com/user-attachments/assets/0430af1b-e87b-44c2-a1eb-ad7a412311fd)
 
 **Fig. 10** shows local temperature, humidity, and pressure measured by the DMT11 sensor on the left and BME280 on the right with raw and smoothed data and cubic model. 
+#### Success Criteria Addressed: 1 & 3
 
-### Success Criteria Addressed: 1,3,4,6
+
+
+####2. Data analysis that includes annotations for the minimum, maximum, and median values.
+
+Cited from `graph_lib.py`:
+```
+def calc_statistics(values):
+    stats = {
+        "mean": np.mean(values),
+        "min": np.min(values),
+        "max": np.max(values),
+        "median": np.median(values),
+    }
+    return stats
+```
+This function uses numpy to calculate the statistics values and return them as a dictionary with the corresponding keys. 
+
+Cited from `graphs_local.py`:
+```
+tats_temp = calc_statistics(data["temperature"])
+
+plt.subplots_adjust(hspace=0.7, wspace=0.1)
+
+temp_stats = plt.subplot(3, 1, 1)
+plot_data(temp_stats, data["time"], data["temperature"], "Temperature Statistics", " (°C)")
+temp_stats.plot(data["time"][int(ws/2):len(yT_smoothed)+int(ws/2)],yT_smoothed,color="#577c8e")
+temp_stats.axhline(stats_temp["median"], color='green', linestyle='--', label='median')
+temp_stats.axhline(stats_temp["min"], color='purple', linestyle='--', label='min')
+temp_stats.axhline(stats_temp["max"], color='orange', linestyle='--', label='max')
+temp_stats.legend(['raw data', 'smoothed data','median', 'min','max'], loc='upper right', fontsize='x-small')
+```
+This uses the values and the functions in graph_lib.py to plot the dotted lines representing these values with different colors. 
+
+
+![image (8)](https://github.com/user-attachments/assets/6c509fd3-6323-41eb-9e23-317deba5de95)
+
+Fig.11 shows the median, minimum, and maximum values of the local temperature, humidity, and pressure data.
+
+
+```
+plt.subplots_adjust(hspace=0.7, wspace=0.1)
+a1 = plt.subplot(3,1,1)
+plot_data1(a1,data["time"],avg1,"Average Temperature"," (°C)")
+a1.plot(data["time"][int(ws/2):len(a1_smoothed)+int(ws/2)],a1_smoothed,color="#577c8e")
+a1.fill_between(data["time"], avg1 - stats_temp["std_dev"], avg1 + stats_temp["std_dev"], alpha=0.5, color="#91bcd9", label="Standard Deviation Region")
+a1.legend(['raw data', 'smoothed data','error bars'],loc = 'lower right', fontsize = 'x-small')
+```
+This uses the standard deviation values and plot an area filled of the standard deviation as error bars using the fill_between() function from matplotlib. 
+
+![image (5)](https://github.com/user-attachments/assets/d22b0bfe-3fea-4fe6-bf54-c168792e90bb)
+
+Fig.12 shows the error bar of the local temperature, humidity, and pressure data.
+
+#### Success Criteria Addressed: 4
+#### 3. Graphs with prediction for the next 12 hours. 
+Cited from `graphs_local.py`:
+```
+current_time = len(data["time"])
+future_time = np.arange(current_time, current_time + 12 * 60)
+x_data1 = np.arange(len(data["time"]))
+y_data1 = avg1
+coefficients1 = np.polyfit(x_data1, y_data1, 3)
+predicted_values1 = cub(coefficients1[0], coefficients1[1], coefficients1[2], coefficients1[3], future_time)
+
+plt.subplots_adjust(hspace=0.7, wspace=0.1)
+a1 = plt.subplot(3,1,1)
+plot_data(a1,data["time"],avg1,"Average Temperature"," (°C)")
+a1.plot(data["time"][int(ws/2):len(a1_smoothed)+int(ws/2)],a1_smoothed,color="#577c8e")
+xticks = np.concatenate([data["time"], future_time])
+# a1.set_xticks(xticks[::360])
+# a1.set_xticklabels(xticks[::360])
+plot_cub_model(avg1)
+plt.plot(future_time, predicted_values1, color="#bf8f90", linestyle='--')
+a1.legend(['raw data', 'smoothed data',"cubic model", "predicted data (next 12 hours)"],loc = 'lower right', fontsize = 'x-small')
+```
+This starts by merging the current time and future 12 hours together as the x-axis, then using the cubic model to predict the values, and using those values to graph the predicted values for the future 12 hours. 
+
+![image (6)](https://github.com/user-attachments/assets/b367eb31-f10d-4e12-bfb8-a6f225ee7e90)
+
+Fig.13 shows the prediction of the next 12 hours of the local temperature, humidity, and pressure data.
 # Criteria D: Functionality
 
 video:
