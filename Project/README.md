@@ -429,7 +429,7 @@ Raw data combined with smoothed data
 Data with a non-linear trend line and prediction based on it
 Data analysis that includes annotations for the standard deviation, minimum, maximum, and median values.
 
-####1. Raw data combined with smoothed data and cubic model
+#### 1. Raw data combined with smoothed data and cubic model
 
 
 Cited from file `graph_lib.py`:
@@ -534,7 +534,7 @@ This part uses all the values as parameters and pass them into the functions to 
 
 
 
-####2. Data analysis that includes annotations for the minimum, maximum, and median values.
+#### 2. Data analysis that includes annotations for the minimum, maximum, and median values.
 
 Cited from `graph_lib.py`:
 ```
