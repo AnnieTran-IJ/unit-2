@@ -67,10 +67,10 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 ## Data Storage
 1. Local storage (CSV):
 ![image](https://github.com/user-attachments/assets/b86cb439-246a-4ae5-aa2e-9ac476e39846)
+**Fig.5** stored data in local csv file
 
-**Fig.5** stored data in local csv file 
 2. Remote storage (API):
-
+![image](https://github.com/user-attachments/assets/c04ba721-50f1-4968-a2ea-e9950707249d)
 **Fig.6** stored data in remote network
 
 ## Flow Diagrams
