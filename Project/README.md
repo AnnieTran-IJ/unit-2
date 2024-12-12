@@ -82,7 +82,8 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 
 **Fig.6** shows the flow diagram for ```upload_data_from_csv```, the function responsible for uploading the data onto the API from the csv file after saving the data entries in the csv file. 
 
-![image](https://github.com/user-attachments/assets/2bf25b2c-f8c0-44ee-ac39-d588f540d5d2)
+![image](https://github.com/user-attachments/assets/0880dd32-a228-4816-9cb5-0e351a4febbb)
+
 
 **Fig.7** shows the flow diagram for the algorithm responsible for retrieving the data from API and processing it to graphable data.  
 
