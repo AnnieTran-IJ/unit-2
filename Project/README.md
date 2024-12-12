@@ -266,7 +266,7 @@ Raw data combined with smoothed data
 Data with a non-linear trend line and prediction based on it
 Data analysis that includes annotations for the standard deviation, minimum, maximum, and median values.
 
-####1. Raw data combined with smoothed data and cubic model
+#### 1. Raw data combined with smoothed data and cubic model
 
 We wanted to plot many graphs, but we realized that the code gets really repetitive and becomes hard to debug and change. Hence, we decided to create another file called `graph_lib.py` apart from the two identical graphing files: `graphs_local.py` and `graphs_remote.py`. `graph_lib.py` has all the functions for graphing. 
 
