@@ -119,77 +119,47 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 | 5                          | Check that readings can be sent to the server per certain amount of time                                                 | Run program in PyCharm which reads the data from the Arduino each second for 30 seconds, and then sends the data {'sensor_id:{id}, 'value':{dhttemp}} to the sensor "testing" previously created on the server using a POST request each 10 seconds. Then, using a GET request, retrieve recordings on "testing" to confirm there are 5 variables.                         | The last 3 recordings in the sensor should contain key and value pairs of {'value':{dhttemp}}. The dhttemp value should correspond to the dhttemp value printed on the console at t=10, 20, and 30.                                                                                                                                                                                                                                                                                                                          |
 | 1,3,4,6                    | Check that the graphs are easy to comprehend and meaningful.                                                             | Show the clients the graphs, and ask them to describe the graph and the data it is representing                                                                                                                                                                                                                                                                            | Ideally, they would be able to answer what kind of data each graph is expressing . If this test fails for any of the graphs, there is a need to make adjustments, such as adding labels, using different colors, etc.                                                                                                                                                                                                                                                                                                        |
 # Criteria C: Development
-## List of techniques used
-* Functions
-* Lists and Dictionaries
-* For loop
-* While loop
-* Try-except statement
-* If-else conditional statement
-* Libraries:
-  - Time
-  - Comma Separated Values (CSV) Files
-  - Serial
-  - Application Programming Interface (API)
-  - Socket
-## Development
-### Code in Arduino IDE
-To collect and read data from two sensors, BME280 and DHT11, around the dormitory, we developed a program that gathers 2 variables from the DHT11 sensor and 3 variables from BME280. This data is then uploaded to the Arduino chip using the Arduino IDE. The following code illustrates this process.
+### Techniques:
+* Nested loops structure.
+* Modular structure with functions.
+* Error Handling with try-except blocks.
+* Data parsing and processing.
+* Data mapping with dictionaries. 
+* Local file and remote server (API) handling.
+* Serial Communication
 
+### Development:
+**Data Collection:**
+ 
 Cited from the file `combined_arduino.ino`:
-#### 1. Library configuration:
-```.C++
-#include <Wire.h>
-#include <Adafruit_Sensor.h>
-#include <Adafruit_BME280.h>
-#include "DHT.h"
-```
-In the first 4 lines, we called out libraries that enable interaction with sensors and facilitate communication between the Arduino board and the computer. The `Wire.h` library allows for communication with I2C devices. The `Adafruit_Sensor.h` and `Adafruit_BME280.h` libraries enable the Arduino to interact with the BME280 sensor. Similarly, the `DHT.h` library is used to control the DHT11 sensor.
+ 
+To collect data according to the client's needs, we first set up a connection between two sensors and the Arduino board connected to a computer. This configuration makes it easier to monitor and manage the incoming data.
 
-#### 2. Sensor Configuration:
-```.C++
-// BME280 Configuration
-Adafruit_BME280 bme;
-
-// DHT11 Configuration
-#define DHTPIN 8      // Digital pin connected to the DHT sensor
-#define DHTTYPE DHT11 // DHT 11
-DHT dht(DHTPIN, DHTTYPE);
-```
-In the next 4 lines, we first create an instance of the BME280 sensor, referred to as bme. This serves as a connection between our Arduino code and the physical BME280 sensor. Next, we specify the pin on the Arduino to which the DHT11 sensor is connected, and we establish an identity for the sensor so that it can be used again later.
-
-#### 3. Setup Function:
+We designed the setup function as follows:
+ 
 ```.C++
 void setup() {
     Serial.begin(9600);
-
+```
+Initially, we researched about the Serial module, which is an instance of the HardwareSerial class that is part of the Arduino core and allows us to establish the desired connection (1). The `begin()` function is then called with a baud rate of 9600 bits per second (bps). We investigated why this rate is chosen instead of a higher one (for instance, 115200 baud), and found that 9600 bps has been around for  millennials and proved to be sufficient for most basic applications, such as debugging and simple data transmissions, as implemented in this project (2). Subsequently, we configured the Serial Monitor to send messages confirming the progress of the setup process.
+ 
+```.C++
     // Initialize BME280
     Serial.println(F("Initializing BME280..."));
     bool bmeStatus = bme.begin(0x76);
     if (!bmeStatus) {
-        Serial.println("Could not find a valid BME280 sensor, check wiring!");
+        Serial.println("Could not find a valid BME280 sensor; check wiring!");
         while (1);
     }
     Serial.println("BME280 initialized successfully!");
-
+ 
     // Initialize DHT11
     Serial.println("Initializing DHT11...");
     dht.begin();
     Serial.println("DHT11 initialized successfully!");
-
-    Serial.println("-- Sensors Ready --");
-    delay(2000);
 }
 ```
-
-In this section, we define the setup of the Arduino and initialize communication with the sensors. First, we begin serial communication between the Arduino and the computer using `Serial.begin(9600)`, which sets the baud rate to 9600 for debugging and data logging. We also set for Serial Monitor to send messages to confirm the progress of the setup process.
-
-Next, we initialize the BME280 sensor. Using `Serial.println(F("Initializing BME280...")`, a message is printed to indicate the start of the initialization process. The `bme.begin(0x76)` method is then called on the bme object, which aims to communicate with the BME280 sensor using the I2C address 0x76. The return value, stored in the bmeStatus variable, is checked to confirm if the sensor was successfully detected. If the sensor is not found, an error message is printed, and the program enters an infinite loop `while (1);`, stopping further execution. If the sensor is found, a success message is printed to the Serial Monitor.
-
-After the BME280, the program proceeds to initialize the DHT11 sensor. A message is printed using `Serial.println("Initializing DHT11...")` to indicate this process. The `dht.begin()` method is then called on the dht object to configure the DHT11 sensor for data collection. Upon successful initialization, a confirmation message is printed.
-
-Finally, a general readiness message `"-- Sensors Ready --"` is printed to signify that all sensors have been successfully set up and are ready to operate. A delay of 2000 milliseconds is added to provide a brief pause before the program proceeds to the main loop, ensuring that the sensors are fully stabilized.
-#### 4. Main Loop Function:
+Next, we attempt to start the BME280 sensor. By using `Serial.println(F("Initializing BME280..."))`, a message is printed to indicate that the initialization process has begun. The `bme.begin(0x76)` method is called on the bme object, which tries to communicate with the BME280 sensor using the I2C address 0x76, which is the default for this sensor (3). The return value, stored in the boolean variable `bmeStatus`, is checked to confirm if the sensor was successfully detected. If the sensor is not found, an error message is printed, and the program enters an infinite loop (`while (1);`), halting further execution. If the sensor is found, a success message is printed to the Serial Monitor, similarly for the DHT11 sensor.
 ```.C++
 void loop() {
     // Read BME280 Data
@@ -221,60 +191,25 @@ void loop() {
     Serial.print(",");
     Serial.print(bmeHumidity);
     Serial.println();
-
-
-    // Delay before next reading
-    delay(60000); 
+    delay(60000)
 ```
-In this section, we define the loop function of the program, where the Arduino continuously collects and processes data from the BME280 and DHT11 sensors. The loop begins by reading environmental data from the BME280 sensor. The functions `bme.readTemperature()`, `bme.readPressure()`, and `bme.readHumidity()` retrieve the temperature (in Celsius), pressure (in Pascals, later converted to hectopascals), and relative humidity, respectively. These values are stored in the variables bmeTemperature, bmePressure, and bmeHumidity.
+After that, we want to continuously collect and process data from the sensor every minute. Hence, for the main function of the program, we created a loop that runs every 60000 milliseconds (= 1 minute) – `delay(60000)`. The methods `bme.readTemperature()`, `bme.readPressure()`, and `bme.readHumidity()` retrieve the temperature (in Celsius), pressure (in Pascals, later converted to hectopascals), and relative humidity, respectively. A similar process applies to DHT11. To ensure the flow of the program, we also added a validation part to check whether there are invalid values (i.e., NaN or "not a number").
 
-Next, we set the program to collect data from the DHT11 sensor. The functions `dht.readHumidity()` and `dht.readTemperature()` retrieve the humidity and temperature readings, which are stored in the variables dhtHumidity and dhtTemperature. Since DHT11 sensor is sometimes less accurate (3), readings are then validated to ensure they are not invalid values (i.e., NaN or "not a number"). If any DHT11 reading is invalid, an error message "DHT11,ERROR" is printed to the Serial Monitor. If the readings are valid, the program outputs the data in the format DHT11,<humidity>,<temperature>.
+After processing the DHT11 data, the program prints the BME280 data in the format BME280,<temperature>,<pressure>,<humidity> to the Serial Monitor. Each piece of data is separated by a comma, allowing for easy parsing in the next steps.
 
-After processing the DHT11 data, the program prints the BME280 data in the format BME280,<temperature>,<pressure>,<humidity> to the Serial Monitor. Each piece of data is separated by a comma, allowing for easy extracting in the next stage.
+**Success Criteria Addressed: 2**
 
-### Success Criteria Addressed: 2
-### Code in Pycharm - Data Management
-In order to save the data for further analysis, we wrote a Python program to store all the collected sensor readings in a local CSV file. Additionally, we decided to send the data to a remote storage location on the ISAK-S network as a backup to safeguard against risks associated with saving data locally, such as file corruption, accidental deletion, or hardware failure.
-#### 1. Local storage:
-From file `solution.py`:
-```.C++
-import serial
-import time
-import csv
-serial_port = "COM8"
-baud_rate = 9600
-csv_file = "final_data.csv"
-```
-Firstly, we import the serial library, which allows the Python program to communicate with the Arduino via a serial connection and receive the sensor data. Besides, we also imported the `time` library, providing time-related functions. Specifically in this project, we are using it to create delays and recording timestamps. Then, the library `csv` allows us to create, write, and read structured data. 
-
-
-The line `serial_port = “COM8” specifies the serial port through which the computer communicates with the Arduino, and this value is personalized to the data collector’s computer. After that, `baud_rate = 9600` defines the baud rate, or how quickly data is transmitted and received, which matches with the rate specified in the Arduino code (mentioned above). Lastly, `csv_file = "final_data.csv"` sets the name of the file where the collected sensor data will be saved.
-```.C++
-try:
-   with open(csv_file, "x", newline='') as f:
-       writer = csv.writer(f)
-       writer.writerow(["timestamp", "DHT_temperature", "DHT_humidity", "BME_temperature", "BME_pressure", "BME_humidity"])
-except FileExistsError:
-   pass
-```
-This block of code is aimed at writing the header row for a CSV file, specifying the order of the data to be collected. This organization simplifies data extraction later on. We use try-except statements to handle potential errors; if the header has already been written, the program will simply continue without interruption.
-```.C++
-dht_data = None
-bme_data = None
-```
-We created 2 global variables so data collected from DHT11 and BME280 sensors, respectively, can be temporarily stored until both sets of data are available to be saved to the CSV file.
-```.C++
-def save_to_csv(timestamp, dht_temp, dht_hum, bme_temp, bme_pres, bme_hum):
-   with open(csv_file, "a", newline='') as f:
-       writer = csv.writer(f)
-       writer.writerow([timestamp, dht_temp, dht_hum, bme_temp, bme_pres, bme_hum])
-```
-The purpose of this function is to append a row of sensor data to a CSV file. It takes five arguments: `timestamp` (the current date and time of data collection), `dht_temp` and `dht_hum` (the temperature and humidity values from the DHT11 sensor), and `bme_temp`, `bme_pres`, and `bme_hum` (the temperature, pressure, and humidity values from the plate_number_1 sensor). The CSV file is opened in append mode ("a"), which allows new data to be added without overwriting the existing content. A `csv.writer()` object is created to facilitate writing the data as a new row, and the `writerow()` method is used to write the provided values into the CSV file.
+Cited from the file `solution.py`:
+To save the data according to the client's needs, we wrote a Python program to store all the collected sensor readings in a local CSV file. Additionally, we decided to send the data to a remote storage location on the ISAK-S network as a backup to safeguard against risks associated with saving data locally, such as file corruption, accidental deletion, or hardware failure.
 ```.C++
 def process_data(line):
-   global dht_data, bme_data
+    dht_data = None
+    bme_data = None
+```
+We designed this function to process every single line of sensor data received from the Arduino. In order to avoid, unorganized data and mismatched timestamps, we want all values of both sensors to be collected, validated, and available before saving into the CSV file; therefore, we created 2 variables for temporary storage (`dht_data` and `bme_data`). 
 
-
+_*function process_data() continued:_
+```.C++
    try:
        parts = line.strip().split(',')
        sensor_type = parts[0]
@@ -283,7 +218,10 @@ def process_data(line):
        #timestamp
        current_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 ```
-In this next function, we design this function to process a single line of sensor data received from the Arduino, determine the type of data, and manage storage in the CSV file. `line.strip().split(',')` makes the received line is stripped of leading and trailing whitespace and separated into components based on commas. The first part of the line, `parts[0]`, identifies the sensor type ("DHT11" or "BME280"). Next, a timestamp is generated in the format `YYYY-MM-DD HH:MM:SS`, representing the current time when the data is processed. This timestamp will later be stored alongside the sensor data in the CSV file.
+Since there are 5 different values being extracted from the Arduino file, we imagine there would be a lot of possibilities of getting an error. Therefore, for better error management, we decided to use the try-except statement to catch and handle exceptions that might occur during the execution of code, preventing the program from crashing abruptly as continuous data is especially important for the essence of this project to have the most accurate portrait of the situation.
+
+In the line `line.strip().split(',')` , the received line is stripped of leading and trailing whitespace and separated into components based on commas. The first part of the line, `parts[0]`, identifies the sensor type ("DHT11" or "BME280"). Next, a timestamp is generated in the format `YYYY-MM-DD HH:MM:SS`, representing the current time when the data is processed. This timestamp will later be stored alongside the sensor data in the CSV file.
+
 _*function process_data() continued:_
 ```.C++
        # Process DHT11 data
@@ -292,9 +230,6 @@ _*function process_data() continued:_
            dht_temp = float(parts[2]) if len(parts) > 2 else None
            dht_data = (dht_temp, dht_humidity)  #store the data temporarily
            print(f"DHT11 - Temperature: {dht_temp}, Humidity: {dht_humidity}")
-```
-This part is designated for specific data from the DHT11 sensor. According to the format created initially, if existing, the second and third parts of the line will correspond to the DHT11 readings. Therefore, `float(parts[1])` converts the second part of the line to a float and stores it as `dht_humidity`; if it does not exist, it is set to None. Similarly, the third part (parts[2]) is assigned to `dht_temp`. These values are temporarily stored in the global variable `dht_data` as a tuple. Then, a message is printed to the console for debugging purposes.
-```.C++
        # Process BME280 data
        elif sensor_type == "BME280":
            bme_temp = float(parts[1]) if len(parts) > 1 else None
@@ -303,7 +238,7 @@ This part is designated for specific data from the DHT11 sensor. According to th
            bme_data = (bme_temp, bme_pressure, bme_humidity)  #store the data temporarily
            print(f"BME280 - Temperature: {bme_temp}, Pressure: {bme_pressure}, Humidity: {bme_humidity}")
 ```
-Similar to DHT11, this next part converts subsequent parts of the line (parts[1], parts[2], parts[3]) into floats for temperature, pressure, and humidity, respectively. If any part is missing, the corresponding variable is set to None. These values are stored in the global variable `bme_data` as a tuple with a debugging message.
+This part is designated for specific data from the DHT11 sensor. According to the format created initially, if existing, the second and third parts of the line will correspond to the DHT11 readings. Therefore, `float(parts[1])` converts the second part of the line to a float and stores it as `dht_humidity`; if it does not exist, it is set to None. Similarly, the third part (parts[2]) is assigned to `dht_temp`. These values are temporarily stored in the global variable `dht_data` as a tuple. Then, a message is printed to the console for debugging purposes. A similar process applies for BME280.
 ```.C++
        if dht_data and bme_data: #when both of them are collected, then save in the local file
            dht_temp, dht_humidity = dht_data
@@ -311,117 +246,14 @@ Similar to DHT11, this next part converts subsequent parts of the line (parts[1]
            save_to_csv(current_time, dht_temp, dht_humidity, bme_temp, bme_pressure, bme_humidity)
            print(f"Logged data: {current_time}, {dht_temp}, {dht_humidity}, {bme_temp}, {bme_pressure}, {bme_humidity}")
 
+
            dht_data = None
            bme_data = None
 ```
 For this next part, the overview is that once data from both sensors is available, it combines the values and saves them to the CSV file. The 2nd and 3rd line is the function extracting the temporarily stored data. Then, it calls the `save_to_csv` function, passing the timestamp and sensor data. Afterward, it should print a message confirming that the data has been logged successfully and reset 2 `dht_data`` and `bme_data to None to prepare for the next data collection cycle.
-```.C++
-   #debug
-   except (ValueError, IndexError) as e:
-       print(f"Error processing line: {line}, Error: {e}")
-```
-For debugging purposes, the last two lines indicate that if a ValueError occurs (such as due to an invalid data type) or an IndexError arises (such as from missing data fields), the exception will be caught, and an error message will be printed. This prevents the program from crashing.
 
-![image](https://github.com/user-attachments/assets/b848edc2-4aad-4cb7-b384-5cd4e6254a30)
+**Success Criteria Addressed: 5**
 
-**Fig.8** A screenshot of the first 20 lines of the csv file.
-#### 2. Remote storage:
-Cited from the file `upload_data.py`:
-```.C++
-import csv
-import socket
-import time
-import requests
-
-
-# API Configuration
-ip = "192.168.4.137"
-user = {"username": "A_square", "password": "Ann&Annie"}
-```
-To enable communication with a server and upload the collected data, several libraries are imported at the beginning of the script. The requests library is imported to facilitate HTTP requests, which will be used to send data to the server. The CSV library is included for handling CSV files, and the socket and time libraries are imported for potential network and time-related functionalities during the data upload process.
-Since the server's API requires user authentication for specific actions, we define the user credentials in our code using a JSON dictionary stored in the user variable. This dictionary includes the username and password that we will use to authenticate ourselves and gain access to upload our data. To ensure consistent and convenient access to the server, we store its IP address in a variable as a string. 
-```.C++
-def login():
-   try:
-       response = requests.post(f'http://{ip}/login', json=user)
-       response.raise_for_status()  # Raise an error for failed login attempts
-       cookie = response.json()["access_token"]
-       auth = {"Authorization": f"Bearer {cookie}"}
-       print("Login successful.")
-       return auth
-   except Exception as e:
-       print(f"Failed to log in: {e}")
-       return None
-```
-Here, we have a function to handle user authentication with the server. Within the try-except block, we send a POST request to server’s login endpoint by using the syntax `requests.post()`. If the login is successful, the server's response is converted to JSON format using response.json(). From this response, we extract the "access_token" field, which is the token used to authenticate subsequent requests. The extracted token is formatted as a Bearer token and stored in the `auth` dictionary under the key `Authorization`. This dictionary will be returned to serve as the authentication header for further requests to the server. If the login is successful, a message "Login successful." is printed to the console. Otherwise, the program prints an error message indicating the failure and returns None.
-```.C++
-sensor_ids = {
-   "DHT_temperature": 432,
-   "DHT_humidity": 433,
-   "BME_temperature": 434,
-   "BME_pressure": 435,
-   "BME_humidity": 436,
-}
-```
-Next, we create the `sensor_ids` dictionary to establish a clear mapping between the sensor data types and their corresponding identifiers on the remote database.
-
-We got these IDs using `requests.post()` and this can be found in the file `upload_data.py`
-![image](https://github.com/user-attachments/assets/a8f28ff2-1d02-4ae1-8406-cd27d9969f48)
-
-**Fig.9** Screenshot of our sensors’ unique identifiers on ISAK-S.
-```.C++
-def upload_data_from_csv(csv_file, sensor_ids):
-   global timestamp
-
-
-   try:
-       with open(csv_file, "r") as f:
-           reader = csv.DictReader(f)
-```
-The purpose of this function is to extract the data from the CSV file and upload it to a remote server. After mentioning the 2 variables to track timestamp and failed upload attempt, `with open(csv_file, "r")` block opens the specified CSV file for reading. Then, the `csv.DictReader` reads the file as a dictionary, where column headers act as keys and row data act as values.
-
-_*function upload_data_from_csv() continued:_
-```.C++
-           for row in reader:
-               timestamp = row["timestamp"]
-               print(f"Processing data for timestamp {timestamp}...")
-```
-Following that, a for loop processes each row in the CSV. For each row, a timestamp field is extracted and printed to indicate which timestamp's data is being processed. A nested for loop iterates over the `sensor_ids` dictionary. This allows the program to pair sensor fields with their corresponding IDs.
-```.C++
-               for field, sensor_id in sensor_ids.items():
-                   value = row.get(field)
-                   if value and value.lower() != "nan":
-                       try:
-                           value = float(value)
-```
-To retrieve a value for the current sensor field, we use the function `row.get()`.  If the value exists and is not "nan", it is converted to a float for processing. Any invalid values are skipped with an error message.
-```.C++
-                           # Ensure server connection
-                           if check_connection():
-                               auth = login()
-                               if not auth:
-                                   print("Skipping upload due to failed login.")
-                                   continue
-
-
-                               upload_data(sensor_id, value, auth)
-                           else:
-                               print("Server connection failed. Retrying later...")
-                               failure_count += 1
-                               time.sleep(60)  # Wait before retrying
-                       except ValueError:
-                           print(f"Invalid value for {field}: {value}. Skipping upload.")
-                       except Exception as e:
-                           print(f"Unexpected error while processing {field}: {e}")
-   except FileNotFoundError:
-       print(f"File {csv_file} not found.")
-   except Exception as e:
-       print(f"Error processing CSV file: {e}")
-```
-If the server is reachable (checked by the function `check_connection()` in the same file), the program attempts to log in by calling the login() function. If login fails, the program skips the upload for this row.
-On successful login, the program calls upload_data(sensor_id, value, auth) to send the data to the server. If the server is unavailable, `failure_count` increases by 1 and the program waits 60 seconds `time.sleep(60)` before retrying.
-
-### Success Criteria Addressed: 5
 ### Code in Pycharm - Graphing
 To provide a clear overview of temperature, humidity, and atmospheric pressure data from both local and remote servers, we created individual graphs representing each dataset. For a more effective analysis, we organized the data into three distinct sets:
 Raw data combined with smoothed data
