@@ -132,6 +132,7 @@ _TOK Connection: To what extent does ```the use of data science``` in climate re
 * Data mapping with dictionaries. 
 * Local file and remote server (API) handling.
 * Serial Communication
+* List comprehension
 
 ### Development:
 **Data Collection:**
@@ -265,45 +266,11 @@ Raw data combined with smoothed data
 Data with a non-linear trend line and prediction based on it
 Data analysis that includes annotations for the standard deviation, minimum, maximum, and median values.
 
-#### 1. Raw data combined with smoothed data and cubic model
+####1. Raw data combined with smoothed data and cubic model
 
+We wanted to plot many graphs, but we realized that the code gets really repetitive and becomes hard to debug and change. Hence, we decided to create another file called `graph_lib.py` apart from the two identical graphing files: `graphs_local.py` and `graphs_remote.py`. `graph_lib.py` has all the functions for graphing. 
 
-Cited from file `graph_lib.py`:
-```
-def moving_average(windowSize:int, x:list) -> list:
-    x_smoothed = []
-    for i in range(0,len(x)-windowSize):
-        x_section = x[i:i+windowSize]
-        x_average = sum(x_section)/windowSize
-        x_smoothed.append(x_average)
-    return x_smoothed
-
-def cub(a, b, c, d, x):
-    return a * x ** 3 + b * x ** 2 + c * x + d
-
-def plot_cub_model(value):
-    x = [i for i in range(len(value))]
-    coefficients = np.polyfit(x, value, 3)
-    x_model = np.linspace(min(x), max(x), 500)
-    y_model = np.polyval(coefficients, x_model)
-    plt.plot(x_model, y_model,color="#9b495d")
-    return "Cubic model plotted successfully"
-
-def plot_data(subplot,x:list,y:list, ylabel,yunits):
-    subplot.plot(x,y,color = "#c7d9e5")
-    subplot.set_title(ylabel)
-    subplot.set_xlabel("Time (hr)")
-    subplot.set_ylabel(ylabel+yunits)
-    x_l = []
-    for t in range(len(x)):
-        if (t)%360 == 0 and t+13<=len(x):
-            x_l.append(x[t+13][11:-3])
-    subplot.set_xticklabels(x_l)
-    subplot.set_xticks(np.arange(13, len(x) + 1,360))
-    return("data plotted successfully")
-```
-
-Here, we have 3 functions:
+There are 3 functions relevant to this success criteria:
 moving_average()
 plot_cub_model()
 plot_data()
@@ -318,9 +285,11 @@ def moving_average(windowSize:int, x:list) -> list:
         x_smoothed.append(x_average)
     return x_smoothed
 ```
-This function takes two parameters: windowSize (an integer) and x (a list). It starts with creating a new list for the smoothed x values. Then it goes into a for loop and repeats for length of list x minus windowSize. The process being repeated includes making a variable called x_section which is value of x from i to i+windowSize. It then takes the average of all these values (sum of everything in the list divided by windowSize). Then, that value is appended to the list x_smoothed and when the loop finishes, is returned. 
+This function takes two parameters: windowSize (an integer) and x (a list). It starts with creating a new list for the smoothed x values. Then it goes into a for loop and repeats for length of list x minus windowSize. The process being repeated includes making a variable called x_section which is the value of x from i to i+windowSize. It then takes the average of all these values (sum of everything in the list divided by windowSize). Then, that value is appended to the list x_smoothed and when the loop finishes, is returned. 
 
-We can consider cub() and plot_cub_model() together:
+We created this function because it’s crucial when we want to graph smoothed data. This is from an exercise we did in class. 
+
+Plot_cub_model():
 ```
 def plot_cub_model(value):
     x = [i for i in range(len(value))]
@@ -330,7 +299,9 @@ def plot_cub_model(value):
     plt.plot(x_model, y_model,color="#9b495d")
     return "Cubic model plotted successfully"
 ```
-In the plot_cub_model(), it takes in 1 parameter: value, which is a list. It starts with initializing x as i for every i in the range of the length of value. Coefficients is also intitialized as a list of cubic coefficients using np.polyfit. X_model is then set to 500 points between the smallest x and the biggest x, and y_model is set as the evaluated values of the cubic coefficients using the funtion numpy.polyval(). Then we plot the x and y model with the color “#9b495d" and return “Cubic model plotted successfully)
+In the plot_cub_model(), it takes in 1 parameter: value, which is a list. It starts with initializing x as i for every i in the range of the length of value. Coefficients is also initialised as a list of cubic coefficients using np.polyfit. X_model is then set to 500 points between the smallest x and the biggest x, and y_model is set as the evaluated values of the cubic coefficients using the function numpy.polyval(). Then we plot the x and y model with the color “#9b495d" and return “Cubic model plotted successfully)
+
+This is crucial for plotting the cubic model trendline for the data. We checked the numpy documentation  (8) to find polyval() which evaluates a polynomial at specific values. We choose to use this because it makes it easier to debug since we only need to change 2 parameters. We also decided to use list comprehension to avoid our code looking very confusing and long since we have 200 lines of code and it’s really difficult to scroll through them and find a specific part. 
 
 Plot_data():
 ```
@@ -347,7 +318,9 @@ def plot_data(subplot,x:list,y:list, ylabel,yunits):
     subplot.set_xticks(np.arange(13, len(x) + 1,360))
     return("data plotted successfully")
 ```
-plot_data() takes in 5 parameters: subplot, x, y, ylabel, yunits. This function plots on subplot using the values passed into the function, anda also set the xticks label to recurring once every 6 hours. It returns “dataa plotted successfully’’ for debugging reasons. See fig 5 for more detail on this function. 
+plot_data() takes in 5 parameters: subplot, x, y, ylabel, yunits. This function plots on subplot using the values passed into the function, anda also set the xticks label to recurring once every 6 hours. It returns “dataa plotted successfully’’ for debugging reasons. See fig 5 for more details on this function. 
+
+Creating this function makes it easier for us as it decreases the length of the main graphing files and is easy to make changes to since all we need to change are the parameters. This is the most frequently used function in our graphing files. 
 
 
 Cited from file `graphs_local.py`:
@@ -361,7 +334,7 @@ g1.plot(xDT[int(ws/2):len(yDT_smoothed)+int(ws/2)],yDT_smoothed,color="#577c8e")
 print(plot_cub_model(yDT))
 g1.legend(['raw data', 'smoothed data', 'cubic model'],loc = 'lower right', fontsize = 'x-small')
 ```
-This part uses all the values as parameters and pass them into the functions to create graphs. This is also used for many other graphs, whether they are remote data or local data. 
+This part uses all the values as parameters and pass them into the functions we just mentioned to create graphs. This is also used for many other graphs, whether they are remote data or local data. 
 
 ![image (12)](https://github.com/user-attachments/assets/0430af1b-e87b-44c2-a1eb-ad7a412311fd)
 
