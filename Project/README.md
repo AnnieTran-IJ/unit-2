@@ -459,6 +459,7 @@ https://drive.google.com/file/d/1flFR3hPgdADL09FVJwkAD0dLhgzMOXHi/view?usp=shari
 (3) https://community.openhab.org/t/dht11-results-vs-bme280-results/45177
 
 # Appendix
-![image](https://github.com/user-attachments/assets/aff3beaa-a92c-453c-a419-5cd57806d495)
+![image](https://github.com/user-attachments/assets/c24adc42-9b54-4cd0-becc-65bd38c1caa5)
+
 
 **Fig.9**Consultation with audience interview transcription
