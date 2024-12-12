@@ -198,9 +198,9 @@ After that, we want to continuously collect and process data from the sensor eve
 After processing the DHT11 data, the program prints the BME280 data in the format BME280,<temperature>,<pressure>,<humidity> to the Serial Monitor. Each piece of data is separated by a comma, allowing for easy parsing in the next steps.
 
 **Success Criteria Addressed: 2**
+Next, to save the data according to the client's needs, we wrote a Python program to store all the collected sensor readings in a local CSV file. Additionally, we decided to send the data to a remote storage location on the ISAK-S network as a backup to safeguard against risks associated with saving data locally, such as file corruption, accidental deletion, or hardware failure.
 
 Cited from the file `solution.py`:
-To save the data according to the client's needs, we wrote a Python program to store all the collected sensor readings in a local CSV file. Additionally, we decided to send the data to a remote storage location on the ISAK-S network as a backup to safeguard against risks associated with saving data locally, such as file corruption, accidental deletion, or hardware failure.
 ```.C++
 def process_data(line):
     dht_data = None
