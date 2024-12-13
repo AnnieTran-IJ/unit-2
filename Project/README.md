@@ -344,20 +344,24 @@ This part uses all the values as parameters and pass them into the functions we 
 
 
 
-#### 2. Data analysis that includes annotations for the minimum, maximum, and median values.
+#### 2. Data analysis that includes annotations for the minimum, maximum, and median values and standard deviation.
+We want to show the minimum, maximum, and median values and standard deviation on each graph, but we realized that it would look too messy so we put standard deviation on another graph. 
+
+We decided to use a dictionary to store the values such as min, max, and median for easier and more organized access.
 
 Cited from `graph_lib.py`:
 ```
 def calc_statistics(values):
     stats = {
-        "mean": np.mean(values),
         "min": np.min(values),
         "max": np.max(values),
         "median": np.median(values),
     }
     return stats
 ```
-This function uses numpy to calculate the statistics values and return them as a dictionary with the corresponding keys. 
+This function uses numpy to calculate the statistics values and return them as a dictionary with the corresponding keys. We use numpy instead of basic operations in Python because it saves us space and time on easy tasks and makes the code cleaner. 
+
+We graphed these values as dotted lines to avoid it looking messy on the graphs and for easier analysis on data distribution. 
 
 Cited from `graphs_local.py`:
 ```
@@ -380,6 +384,7 @@ This uses the values and the functions in graph_lib.py to plot the dotted lines 
 
 Fig.11 shows the median, minimum, and maximum values of the local temperature, humidity, and pressure data.
 
+We then plotted the standard deviation on another set of graphs. I didn't really know how to do standard deviation until I realized that it's basically the error range so I used the code to shade the area between average line + standard deviation and average line - standard deviation. 
 
 ```
 plt.subplots_adjust(hspace=0.7, wspace=0.1)
@@ -397,6 +402,8 @@ Fig.12 shows the error bar of the local temperature, humidity, and pressure data
 
 #### Success Criteria Addressed: 4
 #### 3. Graphs with prediction for the next 12 hours. 
+We decided that to show our prediction, we should use a dotted line to show that it's not actually true. We realized that the axes are going to be messed up so we merged the current and the future axes together and set an interval. We had the line extend from the end of the cubic model for the current data so it looks clean. 
+
 Cited from `graphs_local.py`:
 ```
 current_time = len(data["time"])
